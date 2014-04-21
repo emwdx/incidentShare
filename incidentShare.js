@@ -88,6 +88,7 @@ if (Meteor.isClient) {
   },
   'click #showActivities': function(event){
    event.preventDefault(); 
+    
   Session.set('selectStudent','False');
   Session.set('browseLog','False');
   Session.set('housePoints','False');
@@ -408,26 +409,6 @@ Template.selectedStudentInformation.events({
     
     
 });
-Template.mainContent.rendered = function(){
-  $('#my-slideshow').bjqs({
-        'height' : 20,
-        'width' : 600,
-        'responsive' : true,
-         'nexttext' : '', // Text for 'next' button (can use HTML)
-         'prevtext' : '',
-         'randomstart' : true,
-         'animtype' : 'fade', // accepts 'fade' or 'slide'
-         'animduration' : 200, // how fast the animation are
-         'animspeed' : 2000, // the delay between each slide
-         'automatic' : true, // automatic
-         'showmarkers': false,
-         'showcontrols': false
-
-    }); 
-    
-
-   
-}
 
 Template.housePointsTicker.helpers({
     

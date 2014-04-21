@@ -27,34 +27,27 @@
     {{#if currentUser}}
     <div class = "span3 outlineHP">
         
-    <h2 class = "text-center" style = "height: 80px;">{{loginButtons}}</h2>
+    <h2 class = "text-center" style = "height: 70px;">{{>loginButtons}}</h2>
         
     </div>
     {{/if}}
     
     </div>
-    <div class = "row-fluid">
-    
-    <div class = "span8 offset2">
-    
-
-        
-    </div>    
-        
-    </div>
+   
+    {{#unless currentUser}}
     <div class = "row-fluid">
     
     <div class = "span6 offset3">
    
    
-    {{#unless currentUser}}
+    
    	{{>loginForm}}
    
-    {{/unless}}
+    
      
     </div>
     </div>
-    
+    {{/unless}}
    
     
     
@@ -108,17 +101,43 @@
 <div class="navbar">
   <div class="navbar-inner">
     <a class="brand HISText" href="#">Teachers</a>
+    <ul class = "nav">
+        
+    </ul>
     <ul class="nav">
+     <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      Students
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
       <li id = "selectStudent"><a href="#">Student Selection</a></li>
-      <li id = "browseLog"><a href="#">Browse Student Log</a></li>
-      <li id = "housePoints"><a href="#">House Points</a></li>
+      <li id = "browseLog"><a href="#">Browse Student Log</a></li> 
       <li id = "addStudents"><a href = "#addStudent" data-toggle="modal">Add Student</a></li>
+    </ul>
+  </li>
+      <li id = "housePoints"><a href="#">House Points</a></li>
+      
         {{#if isEvan}}
+      <li class = "dropdown">
+      <a href = "#" class="dropdown-toggle" data-toggle="dropdown">
+       Activities
+      <b class="caret"></b>
+      </a>
+     <ul class = "dropdown-menu">
+          
       <li id = "addActivity"><a href = "#addAnActivity" data-toggle="modal">Add Activities</a></li>
       <li id = "showActivities"><a href = "#" >Show Activities</a></li>
-      
+           
+          
+     </ul>
+     </li>
         {{/if}}
     </ul>
+    <ul class="nav">
+  
+  
+</ul>
   </div>
 </div>
 </template>
@@ -155,7 +174,7 @@ House Points:
 <div class = "span6"><span class = "houseTotal text-warning">Fall: <br>{{fall}}</span></div>
 <div class = "span6"><span class = "houseTotal text-info">Winter: <br>{{winter}}</span></div>       
 </div>    
-</div>
+
 
 </template>
 
@@ -181,9 +200,10 @@ House Points:
     <button type="submit" class="btn" id = "loginButton">Sign in</button>
     </div>
   </div>
+  </form>
     {{/unless}}
  
-</form>
+
  {{#if IsLoggingIn}}
 <p class = "text-center">Logging in to DragonTrack...</p>
     {{/if}}
@@ -220,7 +240,7 @@ House Points:
 <div class = "form-group">
 <textarea  name = "comment" class = "form-control input-xxmed" placeholder = "Write a quick description of what happened in this space." rows="2"></textarea><button  class = "btn btn-primary submitIncident HISbutton"> Submit incident</button>
 </div>
-<p/>
+<p></p>
 <div class = "form-group">
 <label class = "sr-only {{houseClass}}">Add House Points</label>
 <select name = "addHousePoints" class = "form-control input-xxmed" id = "addHousePoints">
@@ -242,15 +262,3 @@ House Points:
 
 </template>
 
-<template name = "housePointsTicker">
- <div id="my-slideshow">
-    
-    <ul class="bjqs">
-       
-        {{#each housePointsDescription}}
-        <li>{{comments}}</li>
-         {{/each}}
-       
-    </ul>
-</div>
-</template>
