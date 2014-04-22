@@ -9,7 +9,20 @@ Activities = new Meteor.Collection('activities');
 
 if (Meteor.isClient) {
  
+      
+ Router.configure({ layoutTemplate: 'outline'});
     
+  Router.map(function() {
+      
+      this.route('mainContent', {path: '/'});
+      this.route('showActivities',{path:'/showActivities/'});
+      this.route('confirmationPage', { 
+          path: '/registrationConfirmation/:_id/:code/',
+          data: function() { return Runners.findOne({runnerRegistrationCode:this.params.code}); },
+          waitOn: function() {return Meteor.subscribe('runners', {limit:this.params.code} )}
+      });
+        
+  });
 
   Accounts.config({forbidClientAccountCreation: true}) 
   Session.set("currentlySelectedStudent","");
@@ -410,12 +423,7 @@ Template.selectedStudentInformation.events({
     
 });
 
-Template.housePointsTicker.helpers({
-    
-housePointsDescription: HousePoints.find({})   
-    
-    
-});
+
 
 }
 

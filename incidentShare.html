@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 </head>
-<body>
+
+<template name = "outline">
 
     <div class = "container">
     <div class = "row-fluid">
@@ -62,15 +63,24 @@
     
     
     
-    {{>mainContent}}
+    {{>yield}}
    
     {{/if}}
     
     <hr>
-    <footer><em>Created by Evan Weinberg, Copyright 2014</em></footer>
+    <div class = "row-fluid">
+     <footer><em>Created by Evan Weinberg, Copyright 2014</em></footer>   
+    </div>
+    
     </div>
   
-</body>
+
+
+
+
+</template>
+
+
 
 
 <template name = "mainContent">
@@ -100,7 +110,7 @@
 <template name = "teacherButtonBar">
 <div class="navbar">
   <div class="navbar-inner">
-    <a class="brand HISText" href="#">Teachers</a>
+    <a class="brand HISText" href="/">Teachers</a>
     <ul class = "nav">
         
     </ul>
@@ -118,7 +128,7 @@
   </li>
       <li id = "housePoints"><a href="#">House Points</a></li>
       
-        {{#if isEvan}}
+       
       <li class = "dropdown">
       <a href = "#" class="dropdown-toggle" data-toggle="dropdown">
        Activities
@@ -127,12 +137,12 @@
      <ul class = "dropdown-menu">
           
       <li id = "addActivity"><a href = "#addAnActivity" data-toggle="modal">Add Activities</a></li>
-      <li id = "showActivities"><a href = "#" >Show Activities</a></li>
+      <li id = "showActivitiesMenu"><a href = "/showActivities/" >Show Activities</a></li>
            
           
      </ul>
      </li>
-        {{/if}}
+        
     </ul>
     <ul class="nav">
   

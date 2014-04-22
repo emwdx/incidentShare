@@ -145,8 +145,14 @@
       
 </template>
 <template name = "showActivities">
-<div class = "span9 outline" id="showActivities">
+<div class="alert">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+ Click on 'Teachers' to return to regular DragonTrack.
+</div>
+<div class = "row-fluid">
+<div class = "span8 offset2 outline" id="showActivities">
 
+    
 <table class = "table">
 {{#each activities}}    
 <tr>
@@ -156,6 +162,7 @@
 </table>
     
     
+</div>
 </div>
 
 
