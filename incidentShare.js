@@ -9,32 +9,7 @@ Activities = new Meteor.Collection('activities');
 
 if (Meteor.isClient) {
  
-      
- Router.configure({ layoutTemplate: 'outline'});
     
-  Router.map(function() {
-      
-      this.route('mainContent', {path: '/'});
-      this.route('showActivities',{path:'/showActivities/'});
-      this.route('confirmationPage', { 
-          path: '/registrationConfirmation/:_id/:code/',
-          data: function() { return Runners.findOne({runnerRegistrationCode:this.params.code}); },
-          waitOn: function() {return Meteor.subscribe('runners', {limit:this.params.code} )}
-      });
-      this.route('registrationList',{path: '/registrationList/',
-                                    data: function() { return Runners.find()},
-                                    waitOn: function() {return Meteor.subscribe('runners')}});
-      this.route('paymentConfirmationFrontPage',{path:'/HISDrag0nRuN2O14/paymentRegistrationConfirmation/',
-                                                data: function() { return Runners.find()},
-                                                 waitOn: function() {return Meteor.subscribe('runners')}});
-      
-      this.route('paymentConfirmationRunner',{path: '/paymentConfirmation/:id/',
-                                              data: function() {return Runners.findOne({_id:this.params.id})},
-                                              waitOn: function() { return Meteor.subscribe('runners',{limit:this.params.id})}});
-      this.route('unpaidRunnerEmailList', {path: '/unpaidRunnerEmailList/',
-                                          waitOn: function() { return Meteor.subscribe('runners')}});
-        
-  });
 
   Accounts.config({forbidClientAccountCreation: true}) 
   Session.set("currentlySelectedStudent","");
