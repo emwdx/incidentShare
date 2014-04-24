@@ -93,6 +93,14 @@ width: 100%;
    
     
 }
+
+#chatTable{
+    
+ word-wrap: break-word; 
+    table-layout:fixed;
+    width: 100%;   
+    
+}
 #studentList{
     
 height: 400px;
