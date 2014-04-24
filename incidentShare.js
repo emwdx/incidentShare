@@ -16,7 +16,6 @@ if (Meteor.isClient) {
       
       this.route('mainContent', {path: '/'});
       this.route('showActivities',{path:'/showActivities/'});
-      this.route('mobileView',{path:'/mobile/'});
       this.route('confirmationPage', { 
           path: '/registrationConfirmation/:_id/:code/',
           data: function() { return Runners.findOne({runnerRegistrationCode:this.params.code}); },

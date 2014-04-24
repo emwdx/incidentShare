@@ -225,7 +225,7 @@ House Points:
   <input type="text" class="input-medium search-query" placeholder = "Enter message here." id = "chatMessage">
   <button class="btn" id = 'sendChatMessage'>Send Message</button>
 </form>
-<table class = "table  table-condensed" id = "chatTable">
+<table class = "table  table-condensed">
     {{#each chatMessage}}
     {{>chatLine}}
     {{/each}}
@@ -235,7 +235,7 @@ House Points:
 
 <template name = "chatLine">
    
-<tr><td class = "chatUser">{{user}}:<br><span style = "font-size:4px;">{{cleanDate submittedAt}}</span> </td><td class = "chatMessage">{{message}}</td></tr>
+<tr><td>{{user}}:<br><span style = "font-size:4px;">{{cleanDate submittedAt}}</span> </td><td>{{message}}</td></tr>
    
 </template>
 
@@ -271,3 +271,4 @@ House Points:
 
 
 </template>
+
