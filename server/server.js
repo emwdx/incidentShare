@@ -1,4 +1,4 @@
-
+Accounts.config({forbidClientAccountCreation: true}); 
 
     
 Meteor.publish('students', function() { 

@@ -24,7 +24,7 @@ if (Meteor.isClient) {
         
   });
 
-  Accounts.config({forbidClientAccountCreation: true}) 
+  Accounts.config({forbidClientAccountCreation: true}); 
   Session.set("currentlySelectedStudent","");
    
   Template.mainContent.helpers({

@@ -93,7 +93,18 @@ width: 100%;
    
     
 }
-
+.chatUser{
+ width:30%;  
+    
+    
+    
+}
+.chatMessage{
+ 
+width:70%;
+    
+    
+}
 #chatTable{
     
  word-wrap: break-word; 
