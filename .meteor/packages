@@ -8,6 +8,6 @@ insecure
 bootstrap
 backbone
 jquery
-accounts-ui
 accounts-password
 iron-router
+accounts-ui

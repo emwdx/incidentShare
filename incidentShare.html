@@ -225,7 +225,7 @@ House Points:
   <input type="text" class="input-medium search-query" placeholder = "Enter message here." id = "chatMessage">
   <button class="btn" id = 'sendChatMessage'>Send Message</button>
 </form>
-<table class = "table  table-condensed">
+<table class = "table  table-condensed" id = "chatTable">
     {{#each chatMessage}}
     {{>chatLine}}
     {{/each}}
