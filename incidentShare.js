@@ -15,7 +15,8 @@ if (Meteor.isClient) {
   Router.map(function() {
       
       this.route('mainContent', {path: '/'});
-      this.route('showActivities',{path:'/showActivities/'});
+      this.route('showActivities',{path:'/showActivities/',
+                                   onRun: activitiesClearSelection});
       this.route('confirmationPage', { 
           path: '/registrationConfirmation/:_id/:code/',
           data: function() { return Runners.findOne({runnerRegistrationCode:this.params.code}); },
@@ -430,4 +431,13 @@ Template.selectedStudentInformation.events({
 loadData = function(){
  
 }
+
+
+function activitiesClearSelection(){
+
+Session.set("activitySelectedDay", "0");
+Session.set("activitySelectedGrade","-10");
+}
+    
+    
 

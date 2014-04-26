@@ -149,15 +149,47 @@
   <button type="button" class="close" data-dismiss="alert">&times;</button>
  Click on 'Teachers' to return to regular DragonTrack.
 </div>
+    
+
+
+    
+   
 <div class = "row-fluid">
-<div class = "span8 offset2 outline" id="showActivities">
+<div class = "span3">
+Day of Week:
+<select id = "selectedDayOfWeek">
+<option value ="0">All</option>
+<option value = "1">Monday</option>    
+<option value = "2">Tuesday</option>    
+<option value = "3">Wednesday</option>    
+<option value = "4">Thursday</option>
+<option value = "5">Friday</option>
+</select>
+<p></p>
+Selected grade:
+<div class = "controls">
+<select id = "activitySelectedGrade">
+<option value ="-10"  >All</option>
+<option value="-1" >Pre-K</option>
+<option value="0">Kindergarden</option>
+<option value="1" >Grade 1</option>
+<option value="2">Grade 2</option>
+<option value="3" >Grade 3</option>
+<option value="4">Grade 4</option>
+<option value="5" >Grade 5</option>
+<option value = "10">All Lower School</option>
+<option value="6">Middle School</option>
+<option value = "7">High School</option>
+</select>
+ </div>
+<p></p>
+</div>
+<div class = "span9  outline" id="showActivities">
 
     
 <table class = "table">
 {{#each activities}}    
-<tr>
-<td>{{activityName}}</td><td>{{activityDescription}}</td>    
-</tr>    
+    {{>activityRow}}
 {{/each}}    
 </table>
     
@@ -166,8 +198,10 @@
 </div>
 
 
-
-
-
+</template>
+<template name = "activityRow">
+<tr>
+<td>{{activityName}}</td><td>{{activityDescription}}</td><td>{{activityCapacity}}</td><td>{{daysString}}</td><td>{{minGrade}}</td><td>{{maxGrade}}</td>
+</tr>
 
 </template>

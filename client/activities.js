@@ -114,8 +114,106 @@ Template.addActivity.events({
 
 Template.showActivities.helpers({
    
-   activities: function(){return Activities.find();}
-    
-    
+   activities: function(){
+       var searchObject = {};
+       var selectedDays = parseInt(Session.get("activitySelectedDay"));
+       var selectedGrade = parseInt(Session.get("activitySelectedGrade"));
+       if(selectedDays!=0){
+       var selectorString = 'activityDays.'+(selectedDays-1)
+       searchObject[selectorString]=true;
+       }
+       if(selectedGrade!=-10){
+          if(selectedGrade==10){
+             
+            searchObject['activityMinGrade']={$gte:0};
+            searchObject['activityMaxGrade']={$lte:5};  
+             
+             
+            }
+          else if(selectedGrade==6){
+            searchObject['activityMinGrade']={$lte:6};
+            searchObject['activityMaxGrade']={$gte:6};     
+              
+              
+              
+          }
+          if(selectedGrade==7){
+              
+            searchObject['activityMinGrade']={$lte:7};
+            searchObject['activityMaxGrade']={$gte:7};    
+              
+              
+          }
+          else{
+             searchObject['activityMinGrade']={$lte:selectedGrade};
+             searchObject['activityMaxGrade']={$gte:selectedGrade};
+                       
+          }
+       
+       }
+       return Activities.find(searchObject);
+                              
+    }
     
 });
+
+Template.showActivities.events({
+    
+  'change #selectedDayOfWeek':function(){
+    var selectedDay =$("#selectedDayOfWeek").val();
+    Session.set("activitySelectedDay", selectedDay);
+    
+      
+  },
+  'change #activitySelectedGrade':function(){
+   var selectedGrade = $('#activitySelectedGrade').val();
+   Session.set("activitySelectedGrade", selectedGrade);
+      
+  }
+    
+});
+
+Template.activityRow.helpers({
+   
+    
+    daysString: function(){
+        var activitiesStringArray = ['M','T','W','Th','F'];
+        var outputString = ''
+        for(var i = 0;i<=4;i++){
+            if(this.activityDays[i]){
+             
+                outputString+=activitiesStringArray[i];
+                
+            }
+        
+    }
+       
+        return outputString;
+    
+    },
+    minGrade:function(){
+        
+    if(this.activityMinGrade<6){ return this.activityMinGrade}
+    else if(this.activityMinGrade==6){ return 'MS';}
+    else if(this.activityMinGrade==7){ return 'HS';}
+        
+    },
+    maxGrade:function(){
+     if(this.activityMaxGrade<6){ return this.activityMaxGrade}
+    else if(this.activityMaxGrade==6){ return 'MS';}
+    else if(this.activityMaxGrade==7){ return 'HS';}   
+        
+    }
+    
+});
+
+
+var activitiesFix = function(){
+var activitiesFix = Activities.find();
+activitiesFix.forEach(function(activity){
+var maxActivity = parseInt(activity.activityMaxGrade);
+var minActivity = parseInt(activity.activityMinGrade);
+Activities.update({_id:activity._id},{$set:{activityMaxGrade:maxActivity,activityMinGrade:minActivity}})
+    
+});
+}
