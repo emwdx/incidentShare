@@ -1,5 +1,6 @@
+searchObject = {};
 
-
+    
 Template.addActivity.events({
     
 'click .activityQuarterSelect': function(e){
@@ -50,9 +51,9 @@ Template.addActivity.events({
  var activityOnThursday = $('#addAnActivity').find('[name = activityOnThursday]').prop('checked')
  var activityOnFriday = $('#addAnActivity').find('[name = activityOnFriday]').prop('checked')
 
- var activityCapacity = $('#addAnActivity').find('[name = activityCapacity]').val();
- var activityMinGrade = $('#addAnActivity').find('[name = activityMinGrade]').val();
- var activityMaxGrade = $('#addAnActivity').find('[name = activityMaxGrade]').val();
+ var activityCapacity = parseInt($('#addAnActivity').find('[name = activityCapacity]').val());
+ var activityMinGrade = parseInt($('#addAnActivity').find('[name = activityMinGrade]').val());
+ var activityMaxGrade = parseInt($('#addAnActivity').find('[name = activityMaxGrade]').val());
  var activityIsQ1 = $("#activitySelectQ1").hasClass('selected')
  var activityIsQ2 = $("#activitySelectQ2").hasClass('selected')
  var activityIsQ3 = $("#activitySelectQ3").hasClass('selected')
@@ -115,43 +116,9 @@ Template.addActivity.events({
 Template.showActivities.helpers({
    
    activities: function(){
-       var searchObject = {};
-       var selectedDays = parseInt(Session.get("activitySelectedDay"));
-       var selectedGrade = parseInt(Session.get("activitySelectedGrade"));
-       if(selectedDays!=0){
-       var selectorString = 'activityDays.'+(selectedDays-1)
-       searchObject[selectorString]=true;
-       }
-       if(selectedGrade!=-10){
-          if(selectedGrade==10){
-             
-            searchObject['activityMinGrade']={$gte:0};
-            searchObject['activityMaxGrade']={$lte:5};  
-             
-             
-            }
-          else if(selectedGrade==6){
-            searchObject['activityMinGrade']={$lte:6};
-            searchObject['activityMaxGrade']={$gte:6};     
-              
-              
-              
-          }
-          if(selectedGrade==7){
-              
-            searchObject['activityMinGrade']={$lte:7};
-            searchObject['activityMaxGrade']={$gte:7};    
-              
-              
-          }
-          else{
-             searchObject['activityMinGrade']={$lte:selectedGrade};
-             searchObject['activityMaxGrade']={$gte:selectedGrade};
-                       
-          }
-       
-       }
-       return Activities.find(searchObject);
+       var searchObject = buildSearchObject();
+       Session.get("activitySelectedGrade");
+       return buildSearchObject();
                               
     }
     
@@ -162,12 +129,22 @@ Template.showActivities.events({
   'change #selectedDayOfWeek':function(){
     var selectedDay =$("#selectedDayOfWeek").val();
     Session.set("activitySelectedDay", selectedDay);
+    var selectedGrade = $('#activitySelectedGrade').val();
+   Session.set("activitySelectedGrade", selectedGrade);
     
       
   },
   'change #activitySelectedGrade':function(){
    var selectedGrade = $('#activitySelectedGrade').val();
    Session.set("activitySelectedGrade", selectedGrade);
+   var selectedDay =$("#selectedDayOfWeek").val();
+    Session.set("activitySelectedDay", selectedDay);
+      
+  },
+  'click #activityClearFilters':function(e){
+   e.preventDefault();
+   activitiesClearSelection();
+   
       
   }
     
@@ -216,4 +193,60 @@ var minActivity = parseInt(activity.activityMinGrade);
 Activities.update({_id:activity._id},{$set:{activityMaxGrade:maxActivity,activityMinGrade:minActivity}})
     
 });
+}
+function activitiesClearSelection(){
+
+Session.set("activitySelectedDay", "0");
+Session.set("activitySelectedGrade","-10");
+$("#selectedDayOfWeek").val('0');
+$('#activitySelectedGrade').val("-10");
+}
+
+
+function buildSearchObject(){
+searchObject = {};
+       var selectedDays = parseFloat(Session.get("activitySelectedDay"));
+       var selectedGrade = parseFloat(Session.get("activitySelectedGrade"));
+       var selectorString = 'activityDays.'+(selectedDays-1)
+       if(selectedDays!=0){
+       
+       searchObject[selectorString]=true;
+       }
+        else{ delete searchObject[selectorString]}
+       if(selectedGrade!=-10){
+          if(selectedGrade==10){
+             
+            delete searchObject['activityMinGrade']
+            searchObject['activityMaxGrade']={$lte:5};  
+             
+             
+            }
+          else if(selectedGrade==6){
+            searchObject['activityMinGrade']={$gt:5};
+            searchObject['activityMaxGrade']={$lt:7};
+              
+              
+              
+          }
+          else if(selectedGrade==7){
+              
+            searchObject['activityMinGrade']={$gt:6};
+            delete searchObject['activityMaxGrade']
+              
+              
+          }
+          else{
+             searchObject['activityMinGrade']={$lte:selectedGrade};
+             searchObject['activityMaxGrade']={$gte:selectedGrade};
+                       
+          }
+       
+       }
+        else{
+            delete searchObject['activityMaxGrade'];
+            delete searchObject['activityMinGrade'];
+            
+        }
+    
+return Activities.find(searchObject);    
 }
