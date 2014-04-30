@@ -204,7 +204,149 @@ Selected grade:
 </template>
 <template name = "activityRow">
 <tr>
-<td>{{activityName}}</td><td>{{activityDescription}}</td><td>{{activityCapacity}}</td><td>{{daysString}}</td><td>{{minGrade}}</td><td>{{maxGrade}}</td>
+<td>{{activityName}}<p></p> <a href = "/editActivity/{{_id}}/" class = "activityEditLink">Edit</a></td><td>{{activityDescription}}</td><td>{{activityCapacity}}</td><td>{{daysString}}</td><td>{{minGrade}}</td><td>{{maxGrade}}</td>
 </tr>
+
+</template>
+
+<template name = "editActivity">
+<div class = "row-fluid" id = "editActivity">
+<div class = "span8 offset2 outline">   
+    
+    
+
+<form class="form-horizontal">
+<div class="control-group">
+<label class = "control-label">Give a name for your activity:</label> 
+<div class = "controls">
+<input type = "text" name = "activityEditName" value = "{{activityName}}" >
+ </div>
+  </div>
+    
+<div class="control-group">
+<label class = "control-label">Describe the activity:</label> 
+<div class = "controls">
+<textarea name = "activityEditDescription" placeholder = "Enter the activity description here." rows = "6">
+{{activityDescription}}    
+</textarea>
+ </div>
+  </div>
+        
+  <div class="control-group">
+    <label class="control-label" for="studentID">Location:</label>
+    <div class="controls">
+      <input type="text" name="activityEditLocation" placeholder="Enter the room number or name." value = "{{activityLocation}}">
+    </div>
+  </div>
+  
+  <div class="control-group">
+    On which day (or days) would you prefer to have this activity?
+     
+
+<table class = "table">
+<tr>
+<td><input type="checkbox" name="activityEditOnMonday" ></td>
+<td><input type="checkbox" name="activityEditOnTuesday" ></td> 
+<td><input type="checkbox" name="activityEditOnWednesday" ></td> 
+<td><input type="checkbox" name="activityEditOnThursday" ></td> 
+<td><input type="checkbox" name="activityEditOnFriday" ></td> 
+</tr>
+<tr>
+<td>Monday</td>
+<td>Tuesday</td> 
+<td>Wednesday</td> 
+<td>Thursday</td> 
+<td>Friday</td> 
+</tr>
+</table>
+    
+ </div>      
+
+<div class="control-group">
+<label class = "control-label">What is the maximum number of students?</label> 
+<div class = "controls">
+<input type = "number" min = "0" name = "activityEditCapacity" value = "{{activityCapacity}}">
+ </div>
+  </div>
+
+<div class="control-group">
+<label class = "control-label">What is the youngest grade for this activity?</label> 
+<div class = "controls">
+<select name = "activityEditMinGrade" >
+<option value ="-10"  ></option>
+<option value="-1" >Pre-K</option>
+<option value="0">Kindergarden</option>
+<option value="1" >Grade 1</option>
+<option value="2">Grade 2</option>
+<option value="3" >Grade 3</option>
+<option value="4">Grade 4</option>
+<option value="5" >Grade 5</option>
+<option value="6">Middle School</option>
+<option value = "7">High School</option>
+</select>
+ </div>
+  </div>    
+
+<div class="control-group">
+<label class = "control-label">What is the oldest grade for this activity?</label> 
+<div class = "controls">
+<select name = "activityEditMaxGrade">
+<option value ="-10"  ></option>
+<option value="-1" >Pre-K</option>
+<option value="0">Kindergarden</option>
+<option value="1" >Grade 1</option>
+<option value="2">Grade 2</option>
+<option value="3" >Grade 3</option>
+<option value="4">Grade 4</option>
+<option value="5" >Grade 5</option>
+<option value="6">Middle School</option>
+<option value = "7">High School</option>
+</select>
+ </div>
+  </div>        
+    
+<div class="control-group">
+    When will this activity be offered?
+     
+
+<table class = "table ">
+<tr>
+<td class = 'activityQuarterEditSelect' id = "activityEditSelectQ1">Quarter 1</td>
+<td class = 'activityQuarterEditSelect' id = "activityEditSelectQ2">Quarter 2</td> 
+<td class = 'activityQuarterEditSelect' id = "activityEditSelectQ3">Quarter 3</td> 
+<td class = 'activityQuarterEditSelect' id = "activityEditSelectQ4">Quarter 4</td> 
+</tr>
+</table>
+
+    
+<table id = "activitiesEditMultipleQuartersReset" style="display:none">
+<tr ><td>Will you accept a new group of students at the beginning of each quarter?
+<input type="checkbox" name="activityEditWillReset" > &nbsp; Yes </td>
+</tr>
+   
+</table>
+ 
+ 
+</div>    
+<div class="control-group">
+<label class = "control-label">Any other comments?</label> 
+<div class = "controls">
+<textarea name = "activityEditComments" placeholder = "Write preferences for the day of the week, equipment, or other important information for the coordinator here." rows = "6">
+    {{activityComments}}    
+</textarea>
+ </div>
+<div class = "control-group">
+
+<button class = "btn btn-primary" id = "updateActivityEdit">Update Activity</button>    
+</div>
+  </div>
+    
+    
+</form>  
+</div>
+</div>
+
+
+
 
 </template>

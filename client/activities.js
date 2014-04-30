@@ -184,6 +184,18 @@ Template.activityRow.helpers({
     
 });
 
+Template.activityRow.events({
+
+'click .activityEditLink':function(){
+    
+ Session.set('currentlySelectedActivity',this.activityName);
+ 
+    
+}
+    
+});
+
+
 
 var activitiesFix = function(){
 var activitiesFix = Activities.find();
@@ -194,6 +206,110 @@ Activities.update({_id:activity._id},{$set:{activityMaxGrade:maxActivity,activit
     
 });
 }
+
+Template.editActivity.events({
+
+ 'click #updateActivityEdit':function(e){
+  e.preventDefault();
+  var activityName = $('#editActivity').find('[name = activityEditName]').val();
+ var activityDescription = $('#editActivity').find('[name = activityEditDescription]').val();
+ var activityLocation = $('#editActivity').find('[name = activityEditLocation]').val();
+    
+ //get possible days of activity
+ var activityOnMonday = $('#editActivity').find('[name = activityEditOnMonday]').prop('checked')
+ var activityOnTuesday = $('#editActivity').find('[name = activityEditOnTuesday]').prop('checked')
+ var activityOnWednesday = $('#editActivity').find('[name = activityEditOnWednesday]').prop('checked')
+ var activityOnThursday = $('#editActivity').find('[name = activityEditOnThursday]').prop('checked')
+ var activityOnFriday = $('#editActivity').find('[name = activityEditOnFriday]').prop('checked')
+
+ var activityCapacity = parseInt($('#editActivity').find('[name = activityEditCapacity]').val());
+ var activityMinGrade = parseInt($('#editActivity').find('[name = activityEditMinGrade]').val());
+ var activityMaxGrade = parseInt($('#editActivity').find('[name = activityEditMaxGrade]').val());
+ var activityIsQ1 = $("#activityEditSelectQ1").hasClass('selected')
+ var activityIsQ2 = $("#activityEditSelectQ2").hasClass('selected')
+ var activityIsQ3 = $("#activityEditSelectQ3").hasClass('selected')
+ var activityIsQ4 = $("#activityEditSelectQ4").hasClass('selected')
+ var activityResetAtQuarters = $('#editActivity').find('[name = activityEditWillReset]').prop('checked')
+ var activityComments = $('#editActivity').find('[name = activityEditComments]').val();
+ 
+ var updatedActivity = {
+     
+    activityName:activityName,
+    activityDescription:activityDescription,
+    activityLocation: activityLocation,
+    activityDays:[activityOnMonday,activityOnTuesday,activityOnWednesday,activityOnThursday,activityOnFriday],
+    activityCapacity:activityCapacity,
+    activityMinGrade:activityMinGrade,
+    activityMaxGrade:activityMaxGrade,
+    activityQuarters:[activityIsQ1,activityIsQ2,activityIsQ3,activityIsQ4],
+    activityResetAtQuarters: activityResetAtQuarters,
+    submittedAt: new Date(),
+    user: Meteor.user().username
+ }
+ 
+ console.log(updatedActivity);
+ Activities.upsert({_id:this._id},{$set:updatedActivity});
+/*
+ $('#editActivity').find('[name = activityName]').val('');
+ $('#editActivity').find('[name = activityDescription]').val('');
+ $('#editActivity').find('[name = activityLocation]').val('');
+    
+ //get possible days of activity
+ $('#editActivity').find('[name = activityOnMonday]').prop('checked',false)
+ $('#editActivity').find('[name = activityOnTuesday]').prop('checked',false)
+ $('#editActivity').find('[name = activityOnWednesday]').prop('checked',false)
+ $('#editActivity').find('[name = activityOnThursday]').prop('checked',false)
+ $('#editActivity').find('[name = activityOnFriday]').prop('checked',false)
+
+ $('#editActivity').find('[name = activityCapacity]').val('0');
+ $('#editActivity').find('[name = activityMinGrade]').val('-10');
+ $('#editActivity').find('[name = activityMaxGrade]').val('-10');
+ $(".activityEditQuarterSelect").removeClass('selected');
+ $('#editActivity').find('[name = activityWillReset]').prop('checked','false')
+ $('#editActivity').find('[name = activityComments]').val('');
+ $('#activitiesMultipleQuartersReset').hide();
+ */
+ Router.go('/showActivities/');
+ },
+    
+'click .activityQuarterEditSelect': function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    
+    var numOfQuarters=0;   
+    
+    
+    
+    if($(e.currentTarget).hasClass('selected')){
+    $(e.currentTarget).removeClass('selected');
+        
+        
+        
+    }
+    else{
+    
+    $(e.currentTarget).addClass('selected');
+        
+    }
+    
+    
+    numOfQuarters = $('.selected').length;
+    
+    if(numOfQuarters>=2){
+        $('#activitiesEditMultipleQuartersReset').show();
+        
+    }
+    else{
+         $('#activitiesMultipleQuartersReset').hide();
+        
+    }
+    
+}
+    
+    
+})
+
+
 function activitiesClearSelection(){
 
 Session.set("activitySelectedDay", "0");
@@ -249,4 +365,26 @@ searchObject = {};
         }
     
 return Activities.find(searchObject);    
+}
+
+
+
+function setActivitiesEdit(){
+    
+ $('body').find('[name = activityEditMinGrade]').val(this.activityMinGrade); 
+     
+     for(var i = 0;i<4;i++){
+         
+        if(this.activityQuarters[i]){
+        
+        $('#activityEditSelectQ'+(i+1)).addClass('selected');    
+            
+            
+        }
+         
+     }   
+    
+    
+    
+    
 }
