@@ -9,26 +9,7 @@ Activities = new Meteor.Collection('activities');
 
 if (Meteor.isClient) {
  
-  Router.configure({ layoutTemplate: 'outline'});
-    
-  Router.map(function() {
-      
-      this.route('mainContent', {path: '/'});
-      this.route('showActivities',{path:'/showActivities/',
-                                   onRun: activitiesClearSelection});
-      this.route('editActivity', { 
-          path: '/editActivity/:_id/',
-          data: function() { return Activities.findOne({_id:this.params._id}); },
-          waitOn: function() {
-              setActivitiesEdit();
-              return Meteor.subscribe('activities', {limit:this.params._id} )
-          
-          
-          }
-      });
-        
-  });    
- 
+  
 
   Accounts.config({forbidClientAccountCreation: true}); 
   Session.set("currentlySelectedStudent","");

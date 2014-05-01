@@ -247,8 +247,8 @@ Template.editActivity.events({
     user: Meteor.user().username
  }
  
- console.log(updatedActivity);
- Activities.upsert({_id:this._id},{$set:updatedActivity});
+ 
+ Activities.update({_id:this._id},{$set:updatedActivity});
 /*
  $('#editActivity').find('[name = activityName]').val('');
  $('#editActivity').find('[name = activityDescription]').val('');
@@ -269,7 +269,8 @@ Template.editActivity.events({
  $('#editActivity').find('[name = activityComments]').val('');
  $('#activitiesMultipleQuartersReset').hide();
  */
- Router.go('/showActivities/');
+Router.go('/showActivities/')
+ 
  },
     
 'click .activityQuarterEditSelect': function(e){
@@ -368,23 +369,3 @@ return Activities.find(searchObject);
 }
 
 
-
-function setActivitiesEdit(){
-    
- $('body').find('[name = activityEditMinGrade]').val(this.activityMinGrade); 
-     
-     for(var i = 0;i<4;i++){
-         
-        if(this.activityQuarters[i]){
-        
-        $('#activityEditSelectQ'+(i+1)).addClass('selected');    
-            
-            
-        }
-         
-     }   
-    
-    
-    
-    
-}

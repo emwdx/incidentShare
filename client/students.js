@@ -7,6 +7,7 @@ Meteor.subscribe('incidents');
 
 Meteor.subscribe('chatMessages');
 Meteor.subscribe('activities');
+
 }
 
 Template.selectGrade.events({
