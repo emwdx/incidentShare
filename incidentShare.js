@@ -203,22 +203,7 @@ if (Meteor.isClient) {
   });
  
   
-  Template.loginForm.events({
   
-  'click #loginButton': function(e){
-  e.preventDefault()
-  var username = $('#inputEmail').val();
-  var password = $('#inputPassword').val();
-  
-  Meteor.loginWithPassword(username,password);
-  
-  
-  
-  }
-  
-  
-  });
-
  Template.loginForm.helpers({
      
    IsLoggingIn: function(){return Meteor.loggingIn()}

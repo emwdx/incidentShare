@@ -126,7 +126,7 @@ Template.showActivities.helpers({
 
 Template.showActivities.events({
     
-  'change #selectedDayOfWeek':function(){
+  'click #selectedDayOfWeek':function(){
     var selectedDay =$("#selectedDayOfWeek").val();
     Session.set("activitySelectedDay", selectedDay);
     var selectedGrade = $('#activitySelectedGrade').val();
@@ -134,7 +134,7 @@ Template.showActivities.events({
     
       
   },
-  'change #activitySelectedGrade':function(){
+  'click #activitySelectedGrade':function(){
    var selectedGrade = $('#activitySelectedGrade').val();
    Session.set("activitySelectedGrade", selectedGrade);
    var selectedDay =$("#selectedDayOfWeek").val();
@@ -308,7 +308,18 @@ Router.go('/showActivities/')
 }
     
     
-})
+});
+
+Template.myActivities.helpers({
+ 
+ activities: function(){
+       var myActivities = Activities.find({user:Meteor.user().username});
+       return myActivities;
+                              
+    }
+    
+    
+});
 
 
 function activitiesClearSelection(){
@@ -325,6 +336,9 @@ searchObject = {};
        var selectedDays = parseFloat(Session.get("activitySelectedDay"));
        var selectedGrade = parseFloat(Session.get("activitySelectedGrade"));
        var selectorString = 'activityDays.'+(selectedDays-1)
+       delete searchObject['activityMaxGrade'];
+       delete searchObject['activityMinGrade'];
+       delete searchObject[selectorString];
        if(selectedDays!=0){
        
        searchObject[selectorString]=true;
