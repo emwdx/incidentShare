@@ -142,18 +142,4 @@ Session.set("activitySelectedDay", "0");
 Session.set("activitySelectedGrade","-10");
 }
     
-function getForum(){
-FEED_URL = 'https://hz.scis-his.net/recent-forum-posts.xml';
- $.get(FEED_URL, function (data) {
-    $(data).find("title").each(function () { // or "item" or whatever suits your feed
-        var el = $(this);
-
-        console.log("------------------------");
-        console.log("title      : " + el.find("title").text());
-        
-    });
-});   
-    
-    
-}
 

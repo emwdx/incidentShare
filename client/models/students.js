@@ -70,77 +70,7 @@ Template.studentList.rendered = function(){
   $(event.currentTarget).addClass('selected');
   Session.set("currentlySelectedStudent",currentStudent);
   
-  },
-     
-  'click .submitIncident': function(event){
-  event.preventDefault();
-  event.stopPropagation();
-  var newIncident = {
-                recordedTimeStamp: new Date,
-				date: new Date().toDateString(),
-				name: this.name,
-				
-				comments: $(event.target).parent().find('[name=comment]').val(),
-				user: Meteor.user().username
-				}
-	Incidents.insert(newIncident);
-	
-    $(event.currentTarget).closest('.entry').fadeToggle();
-    },
-   
-   
-   'click .addHousePoints': function(event){
-  
-   event.preventDefault();
-   event.stopPropagation();
-   var currentStudent = this.name;
-  
-   var retrievedName = Students.find({name:currentStudent}, {fields: {house: 1}}).fetch();
-   console.log(retrievedName);  
-   var currentHouse = retrievedName[0].house;
-		
-   
-   var earnedPoints = {
-        recordedTimeStamp: new Date,
-   		date: new Date().toDateString(),
-   		student: currentStudent,
-   		points: $(event.currentTarget).parent().parent().parent().parent().find('[name=addHousePoints]').val(),
-   		comments: $(event.currentTarget).parent().find('[name=pointsComments]').val(),
-   		house: currentHouse,
-   		reportedBy: Meteor.user().username
-  		 };
-   
-   console.log(earnedPoints);
-   HousePoints.insert(earnedPoints);
-   
-   
-   $(event.currentTarget).closest('.entry').fadeToggle();
-   },
-     
- 'click .editProfile': function(e){
-  e.preventDefault();
-  e.stopPropagation();
-  
-  var currentStudentName = Session.get('currentlySelectedStudent');
-  currentStudent = Students.findOne({name:currentStudentName});
-  
-  $('#editStudent').find('[name=studentName]').val(currentStudent.name);
-  $('#editStudent').find('[name=grade]').val(currentStudent.grade);
-  $('#editStudent').find('[name=studentID]').val(currentStudent.studentID);
-  $('#editStudent').find('[name=advisor]').val(currentStudent.advisor);
-  $('#editStudent').find('[name=dob]').val(currentStudent.dob);
-  $('#editStudent').find('[name=house]').val(currentStudent.house);
-  $('#editStudent').find('[name=guardianemail1]').val(currentStudent.guardianemail1);
-  $('#editStudent').find('[name=guardianemail2]').val(currentStudent.guardianemail2);
-  $('#editStudent').find('[name=fatherphone]').val(currentStudent.fatherphone);
-  $('#editStudent').find('[name=motherphone]').val(currentStudent.motherphone);
-  $('#editStudent').find('[name=nationality]').val(currentStudent.nationality);
-  $('#editStudent').find('[name=gender]').val(currentStudent.gender);
-  
- $('#editStudent').modal('show');
-     
-     
- }
+  }
    
   });
 
@@ -316,7 +246,8 @@ Template.selectedStudentInformation.events({
    		points: $("#addHousePoints").val(),
    		comments: $(event.currentTarget).parent().find('[name=pointsComments]').val(),
    		house: currentHouse,
-   		reportedBy: Meteor.user().username
+   		reportedBy: Meteor.user().username,
+        schoolYear:'14-15'
   		 };
    
    

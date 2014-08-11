@@ -18,7 +18,7 @@ Meteor.publish('incidents', function() {
 Meteor.publish('chatMessages', function() { 
     
     if(this.userId){
-    return ChatMessages.find();
+    return ChatMessages.find({schoolYear:'14-15'});
 }
      else{return null};
 });
@@ -34,7 +34,7 @@ Meteor.publish('activities', function() {
 Meteor.publish('housePoints', function() { 
          
      
-     return HousePoints.find();
+     return HousePoints.find({schoolYear:"14-15"});
      
 });
 Meteor.publish('activitySession',function(){
