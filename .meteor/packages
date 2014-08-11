@@ -11,3 +11,5 @@ jquery
 accounts-password
 iron-router
 accounts-ui
+http
+xml2js

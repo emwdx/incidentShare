@@ -37,6 +37,22 @@ Meteor.publish('housePoints', function() {
      return HousePoints.find();
      
 });
-
-
+Meteor.publish('activitySession',function(){
+   
+    if(this.userId){
+     return ActivitySession.find();   
+    }
+    else{return null;}
+    
+    
+});
+Meteor.publish('systemVariables',function(){
+   
+    if(this.userId){
+     return systemVariables.find();   
+    }
+    else{return null;}
+    
+    
+});
 
