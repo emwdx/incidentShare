@@ -7,6 +7,9 @@ Meteor.subscribe('incidents');
 
 Meteor.subscribe('chatMessages');
 Meteor.subscribe('activities');
+Meteor.subscribe('activitySession');
+Meteor.subscribe('systemVariables');
+
 }
 
 Template.selectGrade.events({
@@ -67,77 +70,7 @@ Template.studentList.rendered = function(){
   $(event.currentTarget).addClass('selected');
   Session.set("currentlySelectedStudent",currentStudent);
   
-  },
-     
-  'click .submitIncident': function(event){
-  event.preventDefault();
-  event.stopPropagation();
-  var newIncident = {
-                recordedTimeStamp: new Date,
-				date: new Date().toDateString(),
-				name: this.name,
-				
-				comments: $(event.target).parent().find('[name=comment]').val(),
-				user: Meteor.user().username
-				}
-	Incidents.insert(newIncident);
-	
-    $(event.currentTarget).closest('.entry').fadeToggle();
-    },
-   
-   
-   'click .addHousePoints': function(event){
-  
-   event.preventDefault();
-   event.stopPropagation();
-   var currentStudent = this.name;
-  
-   var retrievedName = Students.find({name:currentStudent}, {fields: {house: 1}}).fetch();
-   console.log(retrievedName);  
-   var currentHouse = retrievedName[0].house;
-		
-   
-   var earnedPoints = {
-        recordedTimeStamp: new Date,
-   		date: new Date().toDateString(),
-   		student: currentStudent,
-   		points: $(event.currentTarget).parent().parent().parent().parent().find('[name=addHousePoints]').val(),
-   		comments: $(event.currentTarget).parent().find('[name=pointsComments]').val(),
-   		house: currentHouse,
-   		reportedBy: Meteor.user().username
-  		 };
-   
-   console.log(earnedPoints);
-   HousePoints.insert(earnedPoints);
-   
-   
-   $(event.currentTarget).closest('.entry').fadeToggle();
-   },
-     
- 'click .editProfile': function(e){
-  e.preventDefault();
-  e.stopPropagation();
-  
-  var currentStudentName = Session.get('currentlySelectedStudent');
-  currentStudent = Students.findOne({name:currentStudentName});
-  
-  $('#editStudent').find('[name=studentName]').val(currentStudent.name);
-  $('#editStudent').find('[name=grade]').val(currentStudent.grade);
-  $('#editStudent').find('[name=studentID]').val(currentStudent.studentID);
-  $('#editStudent').find('[name=advisor]').val(currentStudent.advisor);
-  $('#editStudent').find('[name=dob]').val(currentStudent.dob);
-  $('#editStudent').find('[name=house]').val(currentStudent.house);
-  $('#editStudent').find('[name=guardianemail1]').val(currentStudent.guardianemail1);
-  $('#editStudent').find('[name=guardianemail2]').val(currentStudent.guardianemail2);
-  $('#editStudent').find('[name=fatherphone]').val(currentStudent.fatherphone);
-  $('#editStudent').find('[name=motherphone]').val(currentStudent.motherphone);
-  $('#editStudent').find('[name=nationality]').val(currentStudent.nationality);
-  $('#editStudent').find('[name=gender]').val(currentStudent.gender);
-  
- $('#editStudent').modal('show');
-     
-     
- }
+  }
    
   });
 
@@ -266,5 +199,140 @@ Template.incidentBadge.helpers({
     }
    
    }
+    
+});
+Template.selectedStudentInformation.events({
+  
+ 'click .submitIncident': function(event){
+  event.preventDefault();
+  event.stopPropagation();
+  var currentStudentName = Session.get("currentlySelectedStudent");
+  var newIncident = {
+                recordedTimeStamp: new Date,
+				date: new Date().toDateString(),
+				name: currentStudentName,
+				
+				comments: $(event.target).parent().find('[name=comment]').val(),
+				user: Meteor.user().username
+				}
+	Incidents.insert(newIncident);
+	
+    Session.set("currentlySelectedStudent","");
+     $(".student").removeClass('selected');
+    },
+   
+   'click .viewIncidents': function(event){
+    event.preventDefault();
+    event.stopPropagation();
+    $('#viewIncidents').modal('show');
+    
+             
+   },
+   'click .addHousePoints': function(event){
+  
+   event.preventDefault();
+   event.stopPropagation();
+   var currentStudentName = Session.get("currentlySelectedStudent");
+  
+   var retrievedName = Students.find({name:currentStudentName}, {fields: {house: 1}}).fetch();
+   console.log(retrievedName);  
+   var currentHouse = retrievedName[0].house;
+		
+   
+   var earnedPoints = {
+        recordedTimeStamp: new Date,
+   		date: new Date().toDateString(),
+   		student: currentStudentName,
+   		points: $("#addHousePoints").val(),
+   		comments: $(event.currentTarget).parent().find('[name=pointsComments]').val(),
+   		house: currentHouse,
+   		reportedBy: Meteor.user().username,
+        schoolYear:'14-15'
+  		 };
+   
+   
+   HousePoints.insert(earnedPoints);
+   
+   
+   Session.set("currentlySelectedStudent","");
+    $(".student").removeClass('selected');
+   },
+     
+ 'click .editProfile': function(e){
+  e.preventDefault();
+  e.stopPropagation();
+  
+  var currentStudentName = Session.get('currentlySelectedStudent');
+  currentStudent = Students.findOne({name:currentStudentName});
+  
+  $('#editStudent').find('[name=studentName]').val(currentStudent.name);
+  $('#editStudent').find('[name=grade]').val(currentStudent.grade);
+  $('#editStudent').find('[name=studentID]').val(currentStudent.studentID);
+  $('#editStudent').find('[name=advisor]').val(currentStudent.advisor);
+  $('#editStudent').find('[name=dob]').val(currentStudent.dob);
+  $('#editStudent').find('[name=house]').val(currentStudent.house);
+  $('#editStudent').find('[name=guardianemail1]').val(currentStudent.guardianemail1);
+  $('#editStudent').find('[name=guardianemail2]').val(currentStudent.guardianemail2);
+  $('#editStudent').find('[name=fatherphone]').val(currentStudent.fatherphone);
+  $('#editStudent').find('[name=motherphone]').val(currentStudent.motherphone);
+  $('#editStudent').find('[name=nationality]').val(currentStudent.nationality);
+  $('#editStudent').find('[name=gender]').val(currentStudent.gender);
+  
+ $('#editStudent').modal('show');
+     
+     
+ },
+ 'submit #formSelectedStudent': function(e){
+  e.preventDefault();
+     
+     
+ }
+
+
+    
+    
+});
+Template.selectedStudentInformation.helpers({
+    
+   studentIsSelected: function(){
+    var selectedStudent = Session.get("currentlySelectedStudent");
+    if(selectedStudent==""){return false}
+    else{ return true}
+    
+       
+   },
+   houseClass: function(){
+       
+    var selectedStudent = Session.get("currentlySelectedStudent");
+    var currentStudent = Students.findOne({name:selectedStudent});
+  if(currentStudent.house=='G'){
+  return "text-success";
+  }
+  
+  else if(currentStudent.house=='Y'){
+  
+  return "text-warning";
+  
+  }
+  
+  else if(currentStudent.house=='B'){
+  
+  return "text-info";
+  
+  }
+  
+  else if(currentStudent.house=='R'){
+  return "text-error";
+  }
+  else{
+      
+   return '';
+      
+  }
+       
+   }
+  
+    
+    
     
 });

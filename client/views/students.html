@@ -1,3 +1,39 @@
+
+
+<template name = "selectedStudentInformation">
+    
+{{#if studentIsSelected}}
+<div class = "span3 outline" id = "studentInformation" > 
+<button class = 'editProfile'><h6>Edit Profile</h6></button><button class = 'viewIncidents'><h6>View Incidents</h6></button>
+
+
+<div class = "form-group">
+<textarea  name = "comment" class = "form-control input-xxmed" placeholder = "Write a quick description of what happened in this space." rows="2"></textarea><button  class = "btn btn-primary submitIncident HISbutton"> Submit incident</button>
+</div>
+<p></p>
+<div class = "form-group">
+<label class = "sr-only {{houseClass}}">Add House Points</label>
+<select name = "addHousePoints" class = "form-control input-xxmed" id = "addHousePoints">
+<option value ="0"  selected ="selected">Select Points to Add</option>
+<option value="1" >1 Point</option>
+<option value="3">3 Points</option>
+<option value="5">5 Points</option>
+</select>
+    
+    
+    <input type = "text" class = "input-xxmed" rows = "2" placeholder = "Why were these points earned?" name = "pointsComments"><button  class = "btn addHousePoints HISbutton "> Add house points</button>
+    
+</div>
+
+
+</div>
+{{/if}}
+
+
+</template>
+
+
+
 <template name = "selectGrade">
 <p class = "text-center">
 <label for="backgroundColor">Select student grade:</label> 
@@ -30,34 +66,14 @@
 {{#each students}}
 <div class = "student">
 <div class = "studentInfo"><h4 class = "HIStext" id = "name_{{_id}}">{{name}} {{>incidentBadge}}</h4></div>
-<div class = "entry well" id = "entry_{{_id}}" > 
-<button class = 'editProfile'><h6>Edit Profile</h6></button>
-<form name = "newRecord" id = "form_{{_id}}" class = "form-inline">
 
-<div class = "form-group">
-<textarea  name = "comment" class = "form-control input-xxlarge" placeholder = "Write a quick description of what happened in this space."></textarea><button  class = "btn btn-primary submitIncident HISbutton"> Submit incident</button>
-</div>
-<p/>
-<div class = "form-group">
-<label class = "sr-only {{houseClass}}">Add House Points</label>
-<select name = "addHousePoints" class = "form-control input-xlarge">
-<option value ="0"  selected ="selected">Select Points to Add</option>
-<option value="1" >1 Point</option>
-<option value="3">3 Points</option>
-<option value="5">5 Points</option>
-</select>
-    
-    
-    <input type = "text" class = "input-xlarge " placeholder = "Why were these points earned?" name = "pointsComments"><button  class = "btn addHousePoints HISbutton "> Add house points</button>
-    
-</div>
-
-</form>
-</div>
-</div>
 </div>
 
 {{/each}}
+</div>
+
+
+
 
 </template>
 

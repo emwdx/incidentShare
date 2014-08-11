@@ -1,0 +1,193 @@
+
+  
+
+<head>
+    <title>DragonTrack</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+</head>
+
+<template name = "outline">
+
+    <div class = "container">
+    <div class = "row-fluid">
+    <div class = "span3 outlineHP">
+    <p class = "text-center">
+     {{>housePointsTotals}}
+    </p>
+        
+    </div>
+    <div class = "span6"> <h1 class = "text-center HISBannerText"><span class = "HISGold">Dragon</span><span class = "HISBlue">Track</span></h1><p></p>
+    
+        
+        {{#if currentUser}}
+    <p class = "HISTagline text-center"><em>Because unwatched dragons...just might light themselves on fire.</em></p>
+        {{/if}}
+   
+    </div>
+    {{#if currentUser}}
+    <div class = "span3 outlineHP">
+        
+    <h2 class = "text-center" style = "height: 70px;">{{> loginButtons}}</h2>
+        
+    </div>
+    {{/if}}
+    
+    </div>
+   
+    {{#unless currentUser}}
+    <div class = "row-fluid">
+    
+    <div class = "span6 offset3">
+   
+   
+    
+   	{{> loginForm}}
+   
+    
+     
+    </div>
+    </div>
+    {{/unless}}
+   
+    
+    
+    {{#if currentUser}}
+     
+    
+    {{> teacherButtonBar}}
+     {{> addStudents}}
+     {{> editStudents}}
+    {{> viewIncidents}}
+    {{> addActivity}}
+
+    
+    
+    
+    {{>yield}}
+   
+    {{/if}}
+    
+    <hr>
+    <div class = "row-fluid">
+     <footer><em>Created by Evan Weinberg, Copyright 2014</em></footer>   
+    </div>
+    
+    </div>
+  
+
+
+
+
+</template>
+
+
+
+
+<template name = "mainContent">
+<div class = "row-fluid"> 
+{{>chatWindow}}
+	{{#if selectStudent}}
+    
+    {{>studentList}}
+    {{/if}}
+    {{#if browseLog}}
+    {{>incidentList}}
+    {{/if}}
+    {{#if housePoints}}
+   
+    {{>housePointsList}}
+    {{/if}}
+    {{#if showActivities}}
+    {{>showActivities}}
+    {{/if}}
+    {{>selectedStudentInformation}}
+    
+</div>
+</template>
+
+
+
+<template name = "teacherButtonBar">
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand HISText" href="/">Teachers</a>
+    <ul class = "nav">
+        
+    </ul>
+    <ul class="nav">
+     <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      Students
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li id = "selectStudent"><a href="#">Student Selection</a></li>
+      <li id = "browseLog"><a href="#">Browse Student Log</a></li> 
+      <li id = "addStudents"><a href = "#addStudent" data-toggle="modal">Add Student</a></li>
+    </ul>
+  </li>
+      <li id = "housePoints"><a href="#">House Points</a></li>
+      
+       
+      <li class = "dropdown">
+      <a href = "#" class="dropdown-toggle" data-toggle="dropdown">
+       Activities
+      <b class="caret"></b>
+      </a>
+     <ul class = "dropdown-menu">
+          
+      <li id = "addActivity"><a href = "#addAnActivity" data-toggle="modal">Add Activities</a></li>
+      <li id = "showActivitiesMenu"><a href = "/showActivities/" >Show Activities</a></li>
+      <li id = "showMyActivitiesMenu"><a href = "/myActivities/">My Activities</a></li>
+           
+          
+     </ul>
+     </li>
+        
+    </ul>
+    <ul class="nav">
+  
+  
+</ul>
+  </div>
+</div>
+</template>
+
+
+
+
+
+
+
+<template name = "loginForm">
+    {{#unless IsLoggingIn}}
+<form class="form-horizontal">
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Email</label>
+    <div class="controls">
+      <input type="text" id="inputEmail" placeholder="Email">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputPassword">Password</label>
+    <div class="controls">
+      <input type="password" id="inputPassword" placeholder="Password">
+    </div>
+  </div>
+   <div class="control-group">
+   <div class = "controls">
+    <button type="submit" class="btn" id = "loginButton">Sign in</button>
+    </div>
+  </div>
+  </form>
+    {{/unless}}
+ 
+
+ {{#if IsLoggingIn}}
+<p class = "text-center">Logging in to DragonTrack...</p>
+    {{/if}}
+
+</template>
+
+

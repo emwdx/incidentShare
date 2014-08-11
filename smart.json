@@ -1,0 +1,8 @@
+{
+  "packages": {
+    "iron-router": {},
+    "feedparser": {},
+    "xml2js": {},
+    "cheerio": {}
+  }
+}
