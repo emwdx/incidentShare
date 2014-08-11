@@ -18,7 +18,8 @@ Template.chatWindow.events({
         
     submittedAt: new Date(),
     user: Meteor.user().username,
-    message: $('#chatMessage').val()
+    message: $('#chatMessage').val(),
+    schoolYear:'14-15'
         
         
     }
