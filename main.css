@@ -127,6 +127,7 @@ overflow:auto;
  margin-left: 15px;
  margin-top: -5px;
  overflow:auto;
+ height:400px;
     
 }
 
@@ -183,6 +184,14 @@ studentInformation{
 tr:hover{
     
 background:#EEE;    
+    
+    
+}
+
+#housePointsCompetitionComment{
+    
+ width:50%;   
+    
     
     
 }

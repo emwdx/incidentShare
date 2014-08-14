@@ -11,7 +11,7 @@ Meteor.publish('students', function() {
 Meteor.publish('incidents', function() { 
     
     if(this.userId){
-    return Incidents.find();
+    return Incidents.find({schoolYear:'14-15'});
 }
      else{return null};
 });

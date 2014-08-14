@@ -30,3 +30,22 @@ House Points:
 
 
 </template>
+
+<template name = "housePointsHouseCompetition">
+<h3>Enter the points earned below:</h3>
+<select id = "housePointsCompetitionSelectHouse">
+<option value = "">Select House</option>
+<option value = "G">Spring(Green)</option>
+<option value = "R">Summer(Red)</option>
+<option value = "Y">Fall(Yellow)</option>
+<option value = "B">Winter(Blue)</option>
+</select>
+<input id = "housePointsCompetitionSelectPoints" type = "number" min="0" max="50" placeholder = "Enter number of points">
+<p></p>
+<input id = "housePointsCompetitionComment" type = "text" placeholder="How were these points earned?">
+<p></p>
+<button class = "btn btn-primary" id = "housePointsCompetitionPointsSubmit">Submit house points</button>
+<h4>Click on 'Teachers' to go back to the main page.</h4>
+
+
+</template>

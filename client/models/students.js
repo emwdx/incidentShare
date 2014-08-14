@@ -221,10 +221,10 @@ Template.selectedStudentInformation.events({
      $(".student").removeClass('selected');
     },
    
-   'click .viewIncidents': function(event){
+   'click #viewStudentPoints': function(event){
     event.preventDefault();
     event.stopPropagation();
-    $('#viewIncidents').modal('show');
+    $('#studentPointsList').modal('show');
     
              
    },
@@ -258,7 +258,7 @@ Template.selectedStudentInformation.events({
     $(".student").removeClass('selected');
    },
      
- 'click .editProfile': function(e){
+ 'click #editProfile': function(e){
   e.preventDefault();
   e.stopPropagation();
   

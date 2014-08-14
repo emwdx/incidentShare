@@ -3,8 +3,10 @@
   addPoints: function(){
   
   retrievedPointsActivity = HousePoints.find({},{sort:{recordedTimeStamp:-1,date:-1}}).fetch();
+ if(retrievedPointsActivity){
   return retrievedPointsActivity;
-  
+ }
+else{return null};
   
   },
   houseClass: function(student){
@@ -86,3 +88,57 @@
       
       
   });
+
+Template.housePointsHouseCompetition.events({
+    
+'click #housePointsCompetitionPointsSubmit': function(event){
+  
+   event.preventDefault();
+   event.stopPropagation();
+   var currentHouse = $('#housePointsCompetitionSelectHouse').val();
+   var pointsComment = $('#housePointsCompetitionComment').val();
+   var houseString;
+   switch($('#housePointsCompetitionSelectHouse').val()){
+           
+    case 'G':
+           houseString = 'Spring';
+           break;
+    case 'R':
+           houseString = 'Summer';
+           break;
+    case 'Y':
+           houseString = 'Fall';
+           break;
+    case 'B':
+           houseString = 'Winter';
+           break;
+    default:
+           houseString = '';
+           
+           
+           
+   }
+       
+   alert(houseString);
+       
+   var earnedPoints = {
+        recordedTimeStamp: new Date,
+   		date: new Date().toDateString(),
+   		student: houseString,
+   		points: $("#housePointsCompetitionSelectPoints").val(),
+   		comments: pointsComment,
+   		house: currentHouse,
+   		reportedBy: Meteor.user().username,
+        schoolYear:'14-15'
+  		 };
+   
+   console.log(earnedPoints);
+   HousePoints.insert(earnedPoints);
+   $('#housePointsCompetitionSelectHouse').val('');
+   $('#housePointsCompetitionComment').val('');
+   $("#housePointsCompetitionSelectPoints").val('0');
+ 
+   }    
+    
+    
+});

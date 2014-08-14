@@ -58,7 +58,7 @@
     {{> teacherButtonBar}}
      {{> addStudents}}
      {{> editStudents}}
-    {{> viewIncidents}}
+    {{> studentPointsList}}
     {{> addActivity}}
 
     
@@ -127,9 +127,14 @@
       <li id = "addStudents"><a href = "#addStudent" data-toggle="modal">Add Student</a></li>
     </ul>
   </li>
-      <li id = "housePoints"><a href="#">House Points</a></li>
-      
-       
+     <li class = "dropdown">   
+    <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">House Points <b class="caret"></b></a>
+    <ul class = "dropdown-menu">        
+      <li id = "housePoints"><a href="/">Browse House Points</a></li>
+      <li id = "addHouseCompetitionPoints"><a href="/house/addpoints/">Add House Competition Points</a></li>
+     </ul> 
+     </li>
+       <!--
       <li class = "dropdown">
       <a href = "#" class="dropdown-toggle" data-toggle="dropdown">
        Activities
@@ -144,7 +149,7 @@
           
      </ul>
      </li>
-        
+    -->    
     </ul>
     <ul class="nav">
   

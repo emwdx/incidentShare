@@ -79,7 +79,7 @@ if (Meteor.isClient) {
   $('li').removeClass('active');
   $(event.currentTarget).addClass('active')
   Session.set("currentlySelectedStudent","");
-  
+  Router.go('/');
   },
   'click #showActivities': function(event){
    event.preventDefault(); 
@@ -109,7 +109,6 @@ if (Meteor.isClient) {
      
    IsLoggingIn: function(){return Meteor.loggingIn()}
      
-     
  });
 
  
@@ -125,8 +124,35 @@ Template.viewIncidents.helpers({
     
 });
     
-   
+Template.studentPointsList.helpers({
+    currentStudent: Session.get("currentlySelectedStudent"),
+    
+    addPoints: function(){
+        var currentStudent = Session.get("currentlySelectedStudent");
+        if(currentStudent){
+        return housePoints.find({name:currentStudent},{sort:{date:-1}})
+        }
+        else{ return null}
+    }
+    
+    
+});
+       
+Template.loginForm.events({
+    
+'click #loginButton': function(e){
 
+ e.preventDefault();
+ var email = $('#inputEmail').val();
+ var password = $('#inputPassword').val();
+ Meteor.loginWithPassword(email, password,loginResult);
+ 
+    
+    
+}
+    
+    
+});
 
 
 }
@@ -142,4 +168,12 @@ Session.set("activitySelectedDay", "0");
 Session.set("activitySelectedGrade","-10");
 }
     
+function loginResult(message) {
+if(message){
+Session.set('loginMessage',message);
+alert(message.reason);
+}
+
+    
+}
 
