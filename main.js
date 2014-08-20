@@ -153,9 +153,60 @@ Template.loginForm.events({
     
     
 });
+    
+Template.studentInformationFrontPage.helpers({
+    
+dragonTimeLocation: function(){
+    
+ var location = systemVariables.findOne({name:'dragonTimeLocation'});
+ if(location){return location.value}   
+    
+}
+    
+    
+});
+    
+Template.studentSignupForm.events({
 
+'click #studentSignupCreateButton': function(e){
+e.preventDefault();
+var studentEmail = $('#signupInputEmail').val();
+var studentPassword = $('#signupInputPassword').val();
+var studentVerify = $('#signupVerifyPassword').val();
+var studentID = $('#signupStudentID').val();
+var studentLastName = $('#signupLastName').val();
+
+var emptyInputs = 0;
+var inputsVerified = true;
+$('.signupForm').each(function(){
+    
+ if($(this).val()==''){emptyInputs++;}   
 
 }
+                      
+);
+if(emptyInputs>0){inputsVerified = false;
+                 alert('Fill out all fields before submitting.');
+                 }
+
+if(studentPassword!=studentVerify){
+alert('Passwords do not match.'); 
+    
+    
+}
+
+
+    
+}
+    
+    
+});
+
+    
+    
+    
+
+} //End of client only 
 
 loadData = function(){
  
@@ -173,7 +224,6 @@ if(message){
 Session.set('loginMessage',message);
 alert(message.reason);
 }
-
     
 }
 

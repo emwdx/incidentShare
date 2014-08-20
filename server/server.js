@@ -48,11 +48,19 @@ Meteor.publish('activitySession',function(){
 });
 Meteor.publish('systemVariables',function(){
    
-    if(this.userId){
      return systemVariables.find();   
-    }
-    else{return null;}
+   
     
     
 });
 
+Meteor.methods({
+    
+validateStudentSignup: function(){
+    
+    
+    
+}
+    
+    
+});

@@ -10,64 +10,11 @@
 <template name = "outline">
 
     <div class = "container">
-    <div class = "row-fluid">
-    <div class = "span3 outlineHP">
-    <p class = "text-center">
-     {{>housePointsTotals}}
-    </p>
+        {{> header}}
+   
+   
+        {{>yield}}
         
-    </div>
-    <div class = "span6"> <h1 class = "text-center HISBannerText"><span class = "HISGold">Dragon</span><span class = "HISBlue">Track</span></h1><p></p>
-    
-        
-        {{#if currentUser}}
-    <p class = "HISTagline text-center"><em>Because unwatched dragons...just might light themselves on fire.</em></p>
-        {{/if}}
-   
-    </div>
-    {{#if currentUser}}
-    <div class = "span3 outlineLogin">
-        
-    <h2 class = "text-center" style = "height: 70px;">{{> loginButtons}}</h2>
-        
-    </div>
-    {{/if}}
-    
-    </div>
-   
-    {{#unless currentUser}}
-    <div class = "row-fluid">
-    
-    <div class = "span6 offset3">
-   
-   
-    
-   	{{> loginForm}}
-   
-    
-     
-    </div>
-    </div>
-    {{/unless}}
-   
-    
-    
-    {{#if currentUser}}
-     
-    
-    {{> teacherButtonBar}}
-     {{> addStudents}}
-     {{> editStudents}}
-    {{> studentPointsList}}
-    {{> addActivity}}
-
-    
-    
-    
-    {{>yield}}
-   
-    {{/if}}
-    
     <hr>
     <div class = "row-fluid">
      <footer><em>Created by Evan Weinberg, Copyright 2014</em></footer>   
@@ -81,8 +28,32 @@
 
 </template>
 
+<template name = "header">
+  <div class = "row-fluid">
+    <div class = "span3 outlineHP">
+    <p class = "text-center">
+     {{>housePointsTotals}}
+    </p>
+        
+    </div>
+    <div class = "span6"> <h1 class = "text-center HISBannerText"><span class = "HISGold">Dragon</span><span class = "HISBlue">Track</span></h1><p></p>
+    
+        
+   
+    </div>
+    {{#if currentUser}}
+    <div class = "span3 outlineLogin">
+        
+    <h2 class = "text-center" style = "height: 70px;">{{> loginButtons}}</h2>
+        
+    </div>
+    {{/if}}
+    
+    </div>
 
+<p></p>
 
+</template>
 
 <template name = "mainContent">
 <div class = "row-fluid"> 
@@ -106,7 +77,47 @@
 </div>
 </template>
 
+<template name = "teacherContent">
+{{#if currentUser}}
+     
+    
+    {{> teacherButtonBar}}
+     {{> addStudents}}
+     {{> editStudents}}
+    {{> studentPointsList}}
+    {{> addActivity}}
 
+   
+   
+    {{/if}}
+<div class = "row-fluid"> 
+{{>chatWindow}}
+	{{#if selectStudent}}
+    
+    {{>studentList}}
+    {{/if}}
+    {{#if browseLog}}
+    {{>incidentList}}
+    {{/if}}
+    {{#if housePoints}}
+   
+    {{>housePointsList}}
+    {{/if}}
+    {{#if showActivities}}
+    {{>showActivities}}
+    {{/if}}
+    {{>selectedStudentInformation}}
+    
+</div>
+
+
+
+
+
+
+
+
+</template>
 
 <template name = "teacherButtonBar">
 <div class="navbar">
@@ -166,6 +177,17 @@
 
 
 <template name = "loginForm">
+ <div class = "row-fluid">
+    
+ <div class = "span6 offset3">
+ <h2 class = "text-center"><a href = "/student/">Click here for DragonTime!</a></h2>    
+ </div>   
+    
+    
+ </div>
+ <div class = "row-fluid">
+    
+    <div class = "span6 offset3">
     {{#unless IsLoggingIn}}
 <form class="form-horizontal">
   <div class="control-group">
@@ -192,7 +214,99 @@
  {{#if IsLoggingIn}}
 <p class = "text-center">Logging in to DragonTrack...</p>
     {{/if}}
+  
+    </div>
+    </div>
+</template>
+
+<template name = "studentSignupForm">
+    {{#unless IsLoggingIn}}
+<form class="form-horizontal">
+  <div class="control-group">
+    <label class="control-label" for="signupInputEmail">Email</label>
+    <div class="controls">
+      <input type="text" required class = "signupForm" id="inputEmail" placeholder="Email">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputPassword">Enter a password of at least six characters:</label>
+ 
+    <div class="controls">
+      <input type="password" required class = "signupForm" id="signupInputPassword" placeholder="Enter password">
+   
+    </div>
+    </div>
+   <div class="control-group">
+    <label class="control-label" for="verifyPassword">Enter your password again:</label>
+ 
+    <div class="controls">
+      <input type="password" required class = "signupForm" id="signupVerifyPassword" placeholder="Enter password again">
+   
+    </div>
+    </div>  
+ <div class="control-group">
+    <label class="control-label" for="studentID">HIS ID Number:</label>
+    <div class="controls">
+      <input type="number" required class = "signupForm" id="signupStudentID" placeholder="Student ID (XXXXX)">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="studentID">Family Name:</label>
+    <div class="controls">
+      <input type="text" required class = "signupForm" id="signupLastName" placeholder="Last Name">
+    </div>
+  </div>
+   <div class="control-group">
+   <div class = "controls">
+    <button type="submit" class="btn" id = "studentSignupCreateButton">Create account</button>
+    </div>
+  </div>
+  </form>
+    {{/unless}}
+ 
+
+ {{#if IsLoggingIn}}
+<p class = "text-center">Logging in to DragonTrack...</p>
+    {{/if}}
 
 </template>
 
+<template name = 'loading'>
+DragonTrack is loading - please be patient.
 
+
+</template>
+
+<template name = "studentInformationFrontPage">
+
+<div class = "row-fluid">
+<div class = "span6 offset3">
+<h4>Today's DragonTime location is: <span class = "HISBlue">{{dragonTimeLocation}}</span></h4>
+</div>    
+
+</div>
+   
+</template>
+
+<template name = "votingMakeSelection">
+<div class = "row-fluid">
+<div class = "span6 offset3">
+<h4>{{voteDescription}}</h4>
+<div class="control-group">
+    <label class="control-label" for="voteSelect">Select your choice:</label>
+    <div class="controls">
+    <select>
+        {{#each votingChoice}}
+        <option value = "{{value}}">{{description}}</option>
+        {{/each}}
+    </select>
+    
+    </div>
+  </div>    
+    
+</div>    
+    
+</div>
+
+
+</template>
