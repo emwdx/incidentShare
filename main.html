@@ -84,38 +84,33 @@
     {{> teacherButtonBar}}
      {{> addStudents}}
      {{> editStudents}}
-    {{> studentPointsList}}
+    
     {{> addActivity}}
 
    
    
-    {{/if}}
+   
 <div class = "row-fluid"> 
 {{>chatWindow}}
 	{{#if selectStudent}}
     
-    {{>studentList}}
+    {{> studentList}}
     {{/if}}
     {{#if browseLog}}
-    {{>incidentList}}
+    {{> incidentList}}
     {{/if}}
     {{#if housePoints}}
    
-    {{>housePointsList}}
+    {{> housePointsList}}
     {{/if}}
     {{#if showActivities}}
-    {{>showActivities}}
+    {{> showActivities}}
     {{/if}}
     {{>selectedStudentInformation}}
-    
+ 
 </div>
 
-
-
-
-
-
-
+ {{/if}}
 
 </template>
 
@@ -285,28 +280,12 @@ DragonTrack is loading - please be patient.
 </div>    
 
 </div>
-   
-</template>
-
-<template name = "votingMakeSelection">
 <div class = "row-fluid">
 <div class = "span6 offset3">
-<h4>{{voteDescription}}</h4>
-<div class="control-group">
-    <label class="control-label" for="voteSelect">Select your choice:</label>
-    <div class="controls">
-    <select>
-        {{#each votingChoice}}
-        <option value = "{{value}}">{{description}}</option>
-        {{/each}}
-    </select>
-    
-    </div>
-  </div>    
-    
+Enter your information below and then click <span class = "text-info">here</span> to view current voting options:    
+    {{>votingMakeSelection}}
+<hr>
 </div>    
-    
-</div>
-
-
+</div>   
 </template>
+

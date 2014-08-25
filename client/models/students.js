@@ -1,6 +1,6 @@
 
 Meteor.subscribe('housePoints');
-
+Meteor.subscribe('votes');
 if(Meteor.user){
 Meteor.subscribe('students');
 Meteor.subscribe('incidents');

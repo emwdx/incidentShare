@@ -1,0 +1,64 @@
+<template name = "votingMakeSelection">
+<div class = "row-fluid">
+<div class = "span6">
+    
+   
+    
+<div class = "control-group">
+<input type = "text"  pattern="[0-9]*" id = "voteStudentID" class = "voteStudentForm" min = "0" max = "99999" placeholder="Student ID# (XXXXX)" >
+<input type = "text" id = "voteStudentName" class = "voteStudentForm" maxlength="3" placeholder = "First three letters of last name" >
+    
+    {{#if voteValidated}}
+    {{#each activeVotes}}
+     {{>votingTemplate}}
+    {{/each}}
+    <button class = "btn btn-primary" id = "voteSubmitVote">Submit my vote</button>
+    {{/if}}
+   
+</div>   
+</div>    
+    
+</div>
+
+
+</template>
+
+<template name = "votingTemplate">
+<hr>
+<h4>{{voteDescription}}</h4>
+<div class="control-group voteElement" id = "{{_id}}">
+    <label class="control-label" for="voteSelect">Select your choice:</label>
+    <div class="controls">
+    <select class = "voteSelect">
+        <option value = "0"></option>
+        {{#each votingChoice}}
+        <option value = "{{value}}">{{description}}</option>
+        {{/each}}
+    </select>
+    
+    </div>
+  </div>    
+
+
+
+</template>
+
+<template name = "votingResults">
+
+    {{#each activeVotes}}
+    <hr>
+    {{>voteResultsItem}}
+    
+    {{/each}}
+    
+</template>
+
+<template name = "voteResultsItem">
+<h4>{{voteDescription}}</h4>
+    <table class = "table">
+    {{#each choices}}
+    <tr><td>{{description}}:</td><td>{{votes}}</td> </tr>
+    {{/each}}
+    <tr><td><b>Total Votes:</b></td><td>{{totalVotes}}</td></tr>
+    </table>
+</template>

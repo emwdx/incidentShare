@@ -8,7 +8,8 @@ if (Meteor.isClient) {
  
   Accounts.config({forbidClientAccountCreation: true}); 
   Session.set("currentlySelectedStudent","");
-   
+  Session.set("validateStudentInfo", false) 
+  
   Template.mainContent.helpers({
   selectStudent: function(){
   
@@ -38,7 +39,38 @@ if (Meteor.isClient) {
   }
    
   
-  })
+  });
+  
+  Template.teacherContent.helpers({
+  selectStudent: function(){
+  
+  return (Session.get('selectStudent')=='True');
+  
+  },
+  browseLog: function(){
+  
+  return (Session.get('browseLog')=='True');
+  
+  },
+  housePoints: function(){
+  
+  return (Session.get('housePoints')=='True');
+  
+  },
+  
+  isActivitiesAdmin: function(){
+  
+  return (Session.get('isActivitiesAdmin')=='True');
+  
+  },
+   showActivities: function(){
+  
+  return (Session.get('showActivities')=='True');
+  
+  }
+   
+  
+  });
   
   Template.selectGrade.events({
   	'change #grade' : function(){
@@ -130,7 +162,11 @@ Template.studentPointsList.helpers({
     addPoints: function(){
         var currentStudent = Session.get("currentlySelectedStudent");
         if(currentStudent){
-        return housePoints.find({name:currentStudent},{sort:{date:-1}})
+        var housePoints = housePoints.find({name:currentStudent},{sort:{date:-1}});    
+        if(housePoints){    
+        return housePoints;
+        }
+        else{return null};
         }
         else{ return null}
     }
@@ -224,6 +260,6 @@ if(message){
 Session.set('loginMessage',message);
 alert(message.reason);
 }
-    
+else{Router.go('/')}  
 }
 

@@ -1,11 +1,14 @@
 Accounts.config({forbidClientAccountCreation: true}); 
 
 Meteor.publish('students', function() { 
-    
-    if(this.userId){
+    if(Meteor.isServer){
+        return Students.find();
+    }
+    else if(this.userId){
     return Students.find();
     }
      else{return null};
+    
 });
 
 Meteor.publish('incidents', function() { 
@@ -54,12 +57,25 @@ Meteor.publish('systemVariables',function(){
     
 });
 
+Meteor.publish('votes',function(){
+    
+   return Votes.find();
+    
+});
+
 Meteor.methods({
     
-validateStudentSignup: function(){
+validateStudent: function(currentStudentID,currentStudentName){
+
+var selectedStudent = Students.findOne({studentID:currentStudentID}); 
     
+ 
+if(selectedStudent){
+
+   return((currentStudentID == selectedStudent.studentID)&&(currentStudentName == selectedStudent.name.slice(0,3)));
     
-    
+}
+else{return false};    
 }
     
     

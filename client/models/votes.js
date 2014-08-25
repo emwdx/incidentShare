@@ -1,24 +1,118 @@
-vote = {name:'House Theme', 
-        voteDescription:'Help choose which house theme we should use this year.',
+vote1 = {_id:'00001',
+         name:'Favorite Ice Cream', 
+        voteDescription:'Choose your favorite ice cream below.',
         active:true,
-            choices:[{value: 1, description:'Red, Blue, Yellow, Green',votes:0},
-                     {value: 2, description:'Strawberry, Blueberry, Banana, Apple',votes:0},
-                     {value: 3, description:'Water, Fire, Earth, Plant',votes:0}
+            choices:[{value: 1, description:'Chocolate',votes:0},
+                     {value: 2, description:'Vanilla',votes:0},
+                     {value: 3, description:'Strawberry',votes:0},
+                     {value: 4, description: 'Water-Flavored',votes:0}
                     ],
             studentsVoted:[],
             eligibleGrades:[6,7,8,9,10,11,12]
            }
-        
-    
+
+vote2 = {_id:'00002',
+         name:'President', 
+        voteDescription:'Student Council President',
+        active:true,
+            choices:[{value: 1, description:'Mr. Indahl',votes:0},
+                     {value: 2, description:'Mr. Vandereyken',votes:0},
+                     {value: 3, description:'Mr. Weinberg',votes:0}
+                    ],
+            studentsVoted:[],
+            eligibleGrades:[6,7,8,9,10,11,12]
+           }
+     
+
 
 Template.votingMakeSelection.helpers({
-
-
-voteDescription: function(){return vote.voteDescription},
-
-votingChoice: function(){return vote.choices}
-
-
-
-})
+   
+voteValidated: function(){return Session.get('validateStudentInfo')},
+activeVotes: function(){return Votes.find({active:true})}
     
+});
+
+Template.votingMakeSelection.events({
+
+'click #voteSubmitVote':function(e){
+
+var voteElements = $('.voteElement');    
+
+for(var i=0;i<=(voteElements.length-1);i++){
+voteChoice = $(voteElements[i]).children().find('.voteSelect').val();
+var currentVoteID = $(voteElements[i]).attr('id');
+var currentVote = Votes.findOne({_id:currentVoteID});
+var currentVoteCount = currentVote.choices[voteChoice-1].votes;
+var studentsVoted = currentVote.studentsVoted;
+var hasVoted = _.include(studentsVoted, parseFloat($('#voteStudentID').val()));
+if(!hasVoted){
+
+currentVoteCount++;
+currentVote.choices[voteChoice-1].votes = currentVoteCount;
+studentsVoted.push(parseFloat($('#voteStudentID').val()));
+
+result = Votes.update({_id:currentVoteID},{$set:{studentsVoted:studentsVoted,choices:currentVote.choices}},serverReceivedData);
+if(result==1){
+alert('Your votes have been recorded');  
+}
+else{alert('The server may be down - submit your votes again.');}
+}
+else{ alert('You have already submitted your vote.');}    
+  
+    
+}
+$('#voteStudentID').val('');
+$('#voteStudentName').val('');
+Session.set('validateStudentInfo',false);
+      
+},
+'change .voteStudentForm':function(e){
+var studentID = parseInt($('#voteStudentID').val());   
+var studentName = $('#voteStudentName').val().toUpperCase();
+if(studentName.length<3){studentName+=' '};
+    
+Meteor.call('validateStudent',studentID, studentName, getServerResultValidate);
+    
+var isValidated = Session.get('validateStudentInfo');    
+    
+}
+
+}); 
+
+Template.votingTemplate.helpers({
+
+
+voteDescription: function(){return this.voteDescription;},
+
+votingChoice: function(){return this.choices;}
+
+
+
+});
+
+Template.votingResults.helpers({
+    
+activeVotes: function(){return Votes.find({active:true})},
+    
+});
+
+Template.voteResultsItem.helpers({
+   
+    totalVotes: function() {
+ 
+    return this.studentsVoted.length;
+    
+}
+    
+});
+
+var getServerResultValidate = function(err,result){
+if(err){console.log(err)}
+else{Session.set('validateStudentInfo',result);}    
+    
+}
+
+var serverReceivedData = function(err,result){
+if(err){console.log(err)}
+else{Session.set('validateStudentInfo',false);}    
+}
