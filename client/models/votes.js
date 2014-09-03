@@ -1,23 +1,20 @@
-vote1 = {_id:'00001',
-         name:'Favorite Ice Cream', 
+vote1 = {name:'Favorite Ice Cream', 
         voteDescription:'Choose your favorite ice cream below.',
         active:true,
             choices:[{value: 1, description:'Chocolate',votes:0},
                      {value: 2, description:'Vanilla',votes:0},
-                     {value: 3, description:'Strawberry',votes:0},
-                     {value: 4, description: 'Water-Flavored',votes:0}
+                     {value: 3, description:'Strawberry',votes:0}
                     ],
             studentsVoted:[],
             eligibleGrades:[6,7,8,9,10,11,12]
            }
 
-vote2 = {_id:'00002',
-         name:'President', 
-        voteDescription:'Student Council President',
+vote2 = {
+         name:'Cancel Classes?', 
+        voteDescription:'Do you want to have classes cancelled for the rest of today?',
         active:true,
-            choices:[{value: 1, description:'Mr. Indahl',votes:0},
-                     {value: 2, description:'Mr. Vandereyken',votes:0},
-                     {value: 3, description:'Mr. Weinberg',votes:0}
+            choices:[{value: 1, description:'Yes',votes:0},
+                     {value: 2, description:'No',votes:0}
                     ],
             studentsVoted:[],
             eligibleGrades:[6,7,8,9,10,11,12]

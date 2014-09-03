@@ -1,10 +1,8 @@
 Accounts.config({forbidClientAccountCreation: true}); 
 
 Meteor.publish('students', function() { 
-    if(Meteor.isServer){
-        return Students.find();
-    }
-    else if(this.userId){
+    
+    if(this.userId){
     return Students.find();
     }
      else{return null};
@@ -58,9 +56,10 @@ Meteor.publish('systemVariables',function(){
 });
 
 Meteor.publish('votes',function(){
-    
-   return Votes.find();
-    
+    if(this.userId){
+   return Votes.find({});
+    }
+    else{return Votes.find({},{fields:{choices:1,voteDescription:1,active:1}})}
 });
 
 Meteor.methods({
@@ -80,3 +79,90 @@ else{return false};
     
     
 });
+
+ChatMessages.allow({
+    
+insert: function(){
+    
+ return Meteor.user();   
+    
+},
+update: function(){
+    
+ return Meteor.user();   
+    
+}
+    
+    
+});
+
+Students.allow({
+    
+insert: function(){
+    
+ return Meteor.user();   
+    
+},
+update: function(){
+    
+ return Meteor.user();   
+    
+}
+});
+    
+systemVariables.allow({
+    
+insert: function(){
+    
+ return Meteor.user();   
+    
+},
+update: function(){
+
+return Meteor.user();
+    
+}
+});
+
+HousePoints.allow({
+    
+insert: function(){
+    
+ return Meteor.user();   
+    
+},
+update: function(){
+
+return Meteor.user();
+    
+}
+});
+
+Incidents.allow({
+    
+insert: function(){
+    
+ return Meteor.user();   
+    
+},
+update: function(){
+
+return Meteor.user();
+    
+}
+});
+
+Votes.allow({
+    
+insert: function(){
+    
+return Meteor.user();    
+    
+},
+update: function(){
+    
+return true;   
+    
+}
+    
+})

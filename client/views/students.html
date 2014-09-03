@@ -14,8 +14,8 @@
 <select name = "addHousePoints" class = "form-control input-xxmed" id = "addHousePoints">
 <option value ="0"  selected ="selected">Select Points to Add</option>
 <option value="1" >1 Point</option>
+<option value="2">2 Points</option>
 <option value="3">3 Points</option>
-<option value="5">5 Points</option>
 </select>
     
     
@@ -40,7 +40,7 @@
 
 <template name = "selectGrade">
 <p class = "text-center">
-<label for="backgroundColor">Select student grade:</label> 
+
 <select id = "grade">
 <option value ="0"  selected ="selected"></option>
 <option value="6" >6th</option>
@@ -63,8 +63,8 @@
 
 <template name = "studentList">
 
-<div class = "span6 outline" id = "studentList">
 
+or select by grade:
 {{>selectGrade}}
 
 {{#each students}}
@@ -74,12 +74,21 @@
 </div>
 
 {{/each}}
-</div>
-
-
-
 
 </template>
+
+<template name = "studentAutoComplete">
+<div class = "span6 outline" id = "studentList">
+<div class = "ui-widget">
+Enter the student's name:
+<p class = "text-center"><input type="text" id = "studentComplete"></p>
+
+{{>studentList}}
+</div>
+</div>
+</template>
+
+
 
 <template name = "addStudents">
        

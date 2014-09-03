@@ -336,3 +336,17 @@ Template.selectedStudentInformation.helpers({
     
     
 });
+
+ Template.studentAutoComplete.rendered = function(){
+   var studentList = _(Students.find({},{fields:{name:true}}).fetch()).pluck('name'); 
+   $("#studentComplete").autocomplete({
+    minLength:2,
+    source: studentList,
+    select: function( e, ui ) {
+  
+  currentStudent = ui.item.value;
+  Session.set("currentlySelectedStudent",currentStudent);
+  }
+   
+}); 
+};
