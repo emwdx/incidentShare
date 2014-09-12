@@ -9,7 +9,25 @@ if (Meteor.isClient) {
   Accounts.config({forbidClientAccountCreation: true}); 
   Session.set("currentlySelectedStudent","");
   Session.set("validateStudentInfo", false) 
-  
+  Template.header.helpers({
+      
+  myHousePointsThisWeek: function(){
+  var today = new Date();    
+  var lastSunday = new Date(today.getTime()-today.getDay()*86400*1000);
+  var myHousePoints = HousePoints.find({reportedBy: Meteor.user().username,recordedTimeStamp:{$gte:lastSunday,$lte:today}})
+  var totalPoints = 0;
+  myHousePoints.forEach(function(entry){
+      
+  totalPoints += parseFloat(entry.points);      
+      
+      
+  });
+  return totalPoints;  
+      
+      
+  }
+      
+  });
   Template.mainContent.helpers({
   selectStudent: function(){
   
