@@ -5,14 +5,18 @@
     <title>DragonTrack</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+<link rel="icon" sizes="16x16 32x32" href="/favicon.jpg?v=2">
 </head>
 
 <template name = "outline">
 
     <div class = "container">
         {{> header}}
-   
-   
+        
+        {{#if currentUser}}
+        {{>userBar}}
+        {{/if}}
+        
         {{>yield}}
         
     <hr>
@@ -48,7 +52,8 @@
         
             
     </h3>
-     <p class = "text-center">You awarded <span class = "HISBlue">{{myHousePointsThisWeek}}</span> house points  this week.   </p>
+        {{#if isTeacher}}
+     <p class = "text-center">You awarded <span class = "HISBlue">{{myHousePointsThisWeek}}</span> house points  this week.   </p>{{/if}}
     </div>
     {{/if}}
     
@@ -59,117 +64,30 @@
 </template>
 
 <template name = "mainContent">
-<div class = "row-fluid"> 
-{{>chatWindow}}
-	{{#if selectStudent}}
     
-    {{>studentList}}
-    {{/if}}
-    {{#if browseLog}}
-    {{>incidentList}}
-    {{/if}}
-    {{#if housePoints}}
-   
-    {{>housePointsList}}
-    {{/if}}
-    {{#if showActivities}}
-    {{>showActivities}}
-    {{/if}}
-    {{>selectedStudentInformation}}
-    
-</div>
-</template>
-
-<template name = "teacherContent">
 {{#if currentUser}}
+    {{#if isTeacher}}
+    {{>teacherContent}}
+    {{/if}}
+    {{#if isStudent}}
+    {{>studentContent}}
+    {{/if}}
+{{/if}}
+    
+</template>
+
+<template name = "userBar">
+    {{#if isTeacher}}
      
-    
     {{> teacherButtonBar}}
-     {{> addStudents}}
-     {{> editStudents}}
-    
-    {{> addActivity}}
-
-   
-   
-   
-<div class = "row-fluid"> 
-{{>chatWindow}}
-	{{#if selectStudent}}
-    
-    {{> studentAutoComplete}}
-    {{/if}}
-    {{#if browseLog}}
-    {{> incidentList}}
-    {{/if}}
-    {{#if housePoints}}
-   
-    {{> housePointsList}}
-    {{/if}}
-    {{#if showActivities}}
-    {{> showActivities}}
-    {{/if}}
-    {{>selectedStudentInformation}}
- 
-</div>
-
- {{/if}}
-
-</template>
-
-<template name = "teacherButtonBar">
-<div class="navbar">
-  <div class="navbar-inner">
-    <a class="brand HISText" href="/">Teachers</a>
-    <ul class = "nav">
         
-    </ul>
-    <ul class="nav">
-     <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      Students
-      <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-      <li id = "selectStudent"><a href="#">Student Selection</a></li>
-      <li id = "browseLog"><a href="#">Browse Student Log</a></li> 
-      <li id = "addStudents"><a href = "#addStudent" data-toggle="modal">Add Student</a></li>
-    </ul>
-  </li>
-     <li class = "dropdown">   
-    <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">House Points <b class="caret"></b></a>
-    <ul class = "dropdown-menu">        
-      <li id = "housePoints"><a href="/">Browse House Points</a></li>
-      <li id = "addHouseCompetitionPoints"><a href="/house/addpoints/">Add House Competition Points</a></li>
-     </ul> 
-     </li>
-       <!--
-      <li class = "dropdown">
-      <a href = "#" class="dropdown-toggle" data-toggle="dropdown">
-       Activities
-      <b class="caret"></b>
-      </a>
-     <ul class = "dropdown-menu">
-          
-      <li id = "addActivity"><a href = "#addAnActivity" data-toggle="modal">Add Activities</a></li>
-      <li id = "showActivitiesMenu"><a href = "/showActivities/" >Show Activities</a></li>
-      <li id = "showMyActivitiesMenu"><a href = "/myActivities/">My Activities</a></li>
-           
-          
-     </ul>
-     </li>
-    -->    
-    </ul>
-    <ul class="nav">
-  
-  
-</ul>
-  </div>
-</div>
+    {{/if}}
+    
+    {{#if isStudent}}
+    {{> studentButtonBar}}
+    {{/if}}
+
 </template>
-
-
-
 
 
 
@@ -217,57 +135,7 @@
     </div>
 </template>
 
-<template name = "studentSignupForm">
-    {{#unless IsLoggingIn}}
-<form class="form-horizontal">
-  <div class="control-group">
-    <label class="control-label" for="signupInputEmail">Email</label>
-    <div class="controls">
-      <input type="text" required class = "signupForm" id="inputEmail" placeholder="Email">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputPassword">Enter a password of at least six characters:</label>
- 
-    <div class="controls">
-      <input type="password" required class = "signupForm" id="signupInputPassword" placeholder="Enter password">
-   
-    </div>
-    </div>
-   <div class="control-group">
-    <label class="control-label" for="verifyPassword">Enter your password again:</label>
- 
-    <div class="controls">
-      <input type="password" required class = "signupForm" id="signupVerifyPassword" placeholder="Enter password again">
-   
-    </div>
-    </div>  
- <div class="control-group">
-    <label class="control-label" for="studentID">HIS ID Number:</label>
-    <div class="controls">
-      <input type="number" required class = "signupForm" id="signupStudentID" placeholder="Student ID (XXXXX)">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="studentID">Family Name:</label>
-    <div class="controls">
-      <input type="text" required class = "signupForm" id="signupLastName" placeholder="Last Name">
-    </div>
-  </div>
-   <div class="control-group">
-   <div class = "controls">
-    <button type="submit" class="btn" id = "studentSignupCreateButton">Create account</button>
-    </div>
-  </div>
-  </form>
-    {{/unless}}
- 
 
- {{#if IsLoggingIn}}
-<p class = "text-center">Logging in to DragonTrack...</p>
-    {{/if}}
-
-</template>
 
 <template name = 'loading'>
 DragonTrack is loading - please be patient.
@@ -275,20 +143,8 @@ DragonTrack is loading - please be patient.
 
 </template>
 
-<template name = "studentInformationFrontPage">
+<template name = 'accessDenied'>
 
-<div class = "row-fluid">
-<div class = "span6 offset3">
-<h4>Today's DragonTime location is: <span class = "HISBlue">{{dragonTimeLocation}}</span></h4>
-</div>    
+You are not allowed to access that page. Go back!
 
-</div>
-<div class = "row-fluid">
-<div class = "span6 offset3">
-Enter your information below and then click <span class = "text-info">here</span> to view current voting options:    
-    {{>votingMakeSelection}}
-<hr>
-</div>    
-</div>   
 </template>
-

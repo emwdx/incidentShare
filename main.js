@@ -1,14 +1,11 @@
 
-
-
 if (Meteor.isClient) {
+     
+  Accounts.config({forbidClientAccountCreation: false,sendVerificationEmail:true}); 
     
-    
-
- 
-  Accounts.config({forbidClientAccountCreation: true}); 
   Session.set("currentlySelectedStudent","");
   Session.set("validateStudentInfo", false) 
+  
   Template.header.helpers({
       
   myHousePointsThisWeek: function(){
@@ -25,135 +22,40 @@ if (Meteor.isClient) {
   return totalPoints;  
       
       
+  },
+  isTeacher:function(){
+      
+   return Meteor.user().profile.group=='teacher'   
+      
   }
       
   });
   Template.mainContent.helpers({
-  selectStudent: function(){
   
-  return (Session.get('selectStudent')=='True');
-  
+  isTeacher: function(){
+  return Meteor.user().profile.group=='teacher';    
   },
-  browseLog: function(){
-  
-  return (Session.get('browseLog')=='True');
-  
-  },
-  housePoints: function(){
-  
-  return (Session.get('housePoints')=='True');
-  
-  },
-  
-  isActivitiesAdmin: function(){
-  
-  return (Session.get('isActivitiesAdmin')=='True');
-  
-  },
-   showActivities: function(){
-  
-  return (Session.get('showActivities')=='True');
-  
-  }
-   
-  
-  });
-  
-  Template.teacherContent.helpers({
-  selectStudent: function(){
-  
-  return (Session.get('selectStudent')=='True');
-  
-  },
-  browseLog: function(){
-  
-  return (Session.get('browseLog')=='True');
-  
-  },
-  housePoints: function(){
-  
-  return (Session.get('housePoints')=='True');
-  
-  },
-  
-  isActivitiesAdmin: function(){
-  
-  return (Session.get('isActivitiesAdmin')=='True');
-  
-  },
-   showActivities: function(){
-  
-  return (Session.get('showActivities')=='True');
-  
-  }
-   
-  
-  });
-  
-  Template.selectGrade.events({
-  	'change #grade' : function(){
-  	Session.set('selectedGrade',$('#grade').val());
-  	
-  	}
-    
-  });
-    
-  Template.teacherButtonBar.events({
-  
-  'click #selectStudent': function(event){
-  event.preventDefault(); 
-  Session.set('selectStudent','True');
-  Session.set('browseLog','False');
-  Session.set('housePoints','False');
-  Session.set('showActivities','False');
-  $('li').removeClass('active');
-  $(event.currentTarget).addClass('active')
-  },
-  'click #browseLog': function(event){
-   event.preventDefault(); 
-  Session.set('selectStudent','False');
-  Session.set('browseLog','True');
-  Session.set('housePoints','False');
-  Session.set('showActivities','False');
-  $('li').removeClass('active');
-  $(event.currentTarget).addClass('active')
-  Session.set("currentlySelectedStudent","");
-  
-  },
-  'click #housePoints': function(event){
-   event.preventDefault(); 
-  Session.set('selectStudent','False');
-  Session.set('browseLog','False');
-  Session.set('housePoints','True');
-  Session.set('showActivities','False');
-  $('li').removeClass('active');
-  $(event.currentTarget).addClass('active')
-  Session.set("currentlySelectedStudent","");
-  Router.go('/');
-  },
-  'click #showActivities': function(event){
-   event.preventDefault(); 
-    
-  Session.set('selectStudent','False');
-  Session.set('browseLog','False');
-  Session.set('housePoints','False');
-  Session.set('showActivities','True');
-  $('li').removeClass('active');
-  $(event.currentTarget).addClass('active')
-  Session.set("currentlySelectedStudent","");
-  
-  }
-  
-  });
-  Template.teacherButtonBar.helpers({
-      isEvan: function(){
-          
-       return Meteor.user().emails[0].address=='eweinberg@scischina.org';   
-          
-      }
+  isStudent: function(){
+  return Meteor.user().profile.group=='student';  
       
-  })
+  }
+      
+      
+  });
+  Template.userBar.helpers({
+
+  isTeacher: function(){
+  return Meteor.user().profile.group=='teacher';    
+  },
+  isStudent: function(){
+  return Meteor.user().profile.group=='student';  
+      
+  }
+      
+      
+  });
     
+  
   
  Template.loginForm.helpers({
      
@@ -227,8 +129,12 @@ e.preventDefault();
 var studentEmail = $('#signupInputEmail').val();
 var studentPassword = $('#signupInputPassword').val();
 var studentVerify = $('#signupVerifyPassword').val();
-var studentID = $('#signupStudentID').val();
-var studentLastName = $('#signupLastName').val();
+    
+var studentID = parseInt($('#signupStudentID').val());   
+var studentName = $('#signupLastName').val().toUpperCase();
+    
+if(studentName.length<3){studentName+=' '};
+
 
 var emptyInputs = 0;
 var inputsVerified = true;
@@ -239,18 +145,42 @@ $('.signupForm').each(function(){
 }
                       
 );
+    
+Meteor.call('validateStudent',studentID, studentName, getServerResultValidate);
+    
+var isValidated = Session.get('validateStudentInfo');  
+    
 if(emptyInputs>0){inputsVerified = false;
                  alert('Fill out all fields before submitting.');
                  }
 
-if(studentPassword!=studentVerify){
+else if(studentPassword!=studentVerify){
 alert('Passwords do not match.'); 
     
     
 }
 
+else if(!isValidated){
 
+alert('Check your student ID and last name and enter again.')    
+  
+}
+
+else{
+
+profile = {studentID:studentID,group:'student'};    
     
+newUser = {
+email: studentEmail,
+username:(studentName.toLowerCase()+$('#signupStudentID').val()),
+password:studentPassword,
+profile:profile    
+};
+
+Accounts.createUser(newUser,function(e){alert(e)});
+    
+}
+  
 }
     
     
@@ -266,6 +196,12 @@ loadData = function(){
  
 }
 
+
+var getServerResultValidate = function(err,result){
+if(err){console.log(err)}
+else{Session.set('validateStudentInfo',result);}    
+    
+}
 
 function activitiesClearSelection(){
 
