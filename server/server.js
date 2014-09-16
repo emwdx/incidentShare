@@ -1,53 +1,35 @@
-Accounts.config({forbidClientAccountCreation: false}); 
-
-
+Accounts.config({forbidClientAccountCreation: true}); 
 
 Meteor.publish('students', function() { 
-if(this.userId){
-currentUser = Meteor.users.findOne({_id:this.userId});
-
-    if(currentUser.profile.group=='teacher'){
+    
+    if(this.userId){
     return Students.find();
     }
-     else if(currentUser.profile.group=='student'){
-         return Students.find({studentID:currentUser.profile.studentID});
-     }
-}
-    else{return null}
+     else{return null};
+    
 });
 
 Meteor.publish('incidents', function() { 
-if(this.userId){
-currentUser = Meteor.users.findOne({_id:this.userId});    
-    if(currentUser.profile.group=='teacher'){
+    
+    if(this.userId){
     return Incidents.find({schoolYear:'14-15'});
 }
      else{return null};
-}
-else{return null;}
 });
-
 Meteor.publish('chatMessages', function() { 
-if(this.userId){
-currentUser = Meteor.users.findOne({_id:this.userId});    
-    if(currentUser.profile.group=='teacher'){
+    
+    if(this.userId){
     return ChatMessages.find({schoolYear:'14-15'});
 }
-     if(currentUser.profile.group=='student'){return null};
-}
-    
-else{return null}
+     else{return null};
 });
 
 Meteor.publish('activities', function() { 
-if(this.userId){
-currentUser = Meteor.users.findOne({_id:this.userId});     
-    if(currentUser.profile.group=='teacher'){
+    
+    if(this.userId){
     return Activities.find();
-    }
-     if(currentUser.profile.group=='student'){return null};
 }
-else{return null;}
+     else{return null};
 });
 
 Meteor.publish('housePoints', function() { 
@@ -57,14 +39,12 @@ Meteor.publish('housePoints', function() {
      
 });
 Meteor.publish('activitySession',function(){
-if(this.userId){
-currentUser = Meteor.users.findOne({_id:this.userId});       
-    if(currentUser.profile.group=='teacher'){
+   
+    if(this.userId){
      return ActivitySession.find();   
     }
     else{return null;}
-}
-else{return null;}
+    
     
 });
 Meteor.publish('systemVariables',function(){
@@ -120,12 +100,12 @@ Students.allow({
     
 insert: function(){
     
- return (Meteor.user().profile.group=='teacher');   
+ return Meteor.user();   
     
 },
 update: function(){
     
- return (Meteor.user().profile.group=='teacher');   
+ return Meteor.user();   
     
 }
 });
@@ -134,12 +114,12 @@ systemVariables.allow({
     
 insert: function(){
     
- return (Meteor.user().profile.group=='teacher');    
+ return Meteor.user();   
     
 },
 update: function(){
 
-return (Meteor.user().profile.group=='teacher');   
+return Meteor.user();
     
 }
 });
@@ -148,12 +128,12 @@ HousePoints.allow({
     
 insert: function(){
     
- return (Meteor.user().profile.group=='teacher');    
+ return Meteor.user();   
     
 },
 update: function(){
 
-return (Meteor.user().profile.group=='teacher');   
+return Meteor.user();
     
 }
 });
@@ -162,12 +142,12 @@ Incidents.allow({
     
 insert: function(){
     
- return (Meteor.user().profile.group=='teacher');      
+ return Meteor.user();   
     
 },
 update: function(){
 
-return (Meteor.user().profile.group=='teacher');   
+return Meteor.user();
     
 }
 });
@@ -176,7 +156,7 @@ Votes.allow({
     
 insert: function(){
     
-return (Meteor.user().profile.group=='teacher');   
+return Meteor.user();    
     
 },
 update: function(){
@@ -186,8 +166,3 @@ return true;
 }
     
 })
-
-Meteor.users.deny({
-   update: function(){return true;} 
-    
-});
