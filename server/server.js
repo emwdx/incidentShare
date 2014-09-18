@@ -3,6 +3,7 @@ Accounts.config({forbidClientAccountCreation: false});
 
 
 Meteor.publish('students', function() { 
+    /*
 if(this.userId){
 currentUser = Meteor.users.findOne({_id:this.userId});
 
@@ -13,7 +14,8 @@ currentUser = Meteor.users.findOne({_id:this.userId});
          return Students.find({studentID:currentUser.profile.studentID});
      }
 }
-    else{return null}
+    else{return null}*/
+    return Students.find();
 });
 
 Meteor.publish('incidents', function() { 
@@ -100,6 +102,8 @@ else{return false};
     
 });
 
+
+
 ChatMessages.allow({
     
 insert: function(){
@@ -120,7 +124,7 @@ Students.allow({
     
 insert: function(){
     
- return (Meteor.user().profile.group=='teacher');   
+ return true//(Meteor.user().profile.group=='teacher');   
     
 },
 update: function(){
@@ -188,6 +192,9 @@ return true;
 })
 
 Meteor.users.deny({
-   update: function(){return true;} 
+   update: function(){return true;},
+   
     
 });
+
+

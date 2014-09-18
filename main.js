@@ -1,8 +1,8 @@
 
 if (Meteor.isClient) {
      
-  Accounts.config({forbidClientAccountCreation: false,sendVerificationEmail:true}); 
-    
+  Accounts.config({forbidClientAccountCreation: false}); 
+  
   Session.set("currentlySelectedStudent","");
   Session.set("validateStudentInfo", false) 
   
@@ -216,4 +216,5 @@ alert(message.reason);
 }
 else{Router.go('/')}  
 }
+
 

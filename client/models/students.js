@@ -1,7 +1,7 @@
 
 Meteor.subscribe('housePoints');
 Meteor.subscribe('votes');
-if(Meteor.user){
+
 Meteor.subscribe('students');
 Meteor.subscribe('incidents');
 
@@ -10,7 +10,7 @@ Meteor.subscribe('activities');
 Meteor.subscribe('activitySession');
 Meteor.subscribe('systemVariables');
 
-}
+
 
 Template.selectGrade.events({
   	'change #grade' : function(){
