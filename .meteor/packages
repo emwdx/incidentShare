@@ -4,8 +4,9 @@
 # but you can also edit it by hand.
 
 meteor-platform
-iron:router@1.0.0-pre1
 accounts-ui
 accounts-password
 bootstrap
 force-ssl
+iron:router@1.0.0-pre2
+
