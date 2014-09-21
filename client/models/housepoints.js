@@ -119,7 +119,7 @@ Template.housePointsHouseCompetition.events({
            
    }
        
-   alert(houseString);
+   
        
    var earnedPoints = {
         recordedTimeStamp: new Date,
