@@ -1,0 +1,17 @@
+<template name = "incidentList">
+
+<div class = "span6 outline">
+
+Incidents:
+<table class = "table  table-condensed">
+
+{{#each incidents}}
+<tr class = {{winClass}}><td ><h5>{{name}}</h5></td><td><h5>{{date}}</h5></td><td><h6>{{comments}}</h6></td><td><h6 class = "text-info">{{user}}</h6></td></tr>
+{{/each}}
+</table>
+
+</div>
+
+</template>
+
+

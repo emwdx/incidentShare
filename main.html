@@ -10,12 +10,12 @@
 
 
 <template name = "outline">
- {{> loginButtons}} 
+
     <div class = "container">
         {{> header}}
         
         {{#if currentUser}}
-        {{>userBar}}
+        {{> userBar}}
         {{/if}}
         
         {{>yield}}

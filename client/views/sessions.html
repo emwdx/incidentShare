@@ -1,0 +1,125 @@
+<template name = "activitySessionAdd">
+<div class = "row">
+
+<div class = "span6 offset3"><h3>Add New Session:</h3></div>    
+    
+</div>
+<div class = "row">
+<div class = "span6 offset3">
+<form class="pull-left">
+  <label>Session Name (format as XXXX-QX)</label>
+  <input type="text" class="span2" placeholder = "Example: 2014-Q1" id = "activityAdminSessionName">
+    <label>Session Start Date:</label>
+  <input type = "text" id = "activityAdminSessionDate"><br>
+Session Quarter:
+  <table class = "table ">
+<tr>
+<td class = 'activityQuarterSelect' id = "activityAdminSelectQ1">Quarter 1</td>
+<td class = 'activityQuarterSelect' id = "activityAdminSelectQ2">Quarter 2</td> 
+<td class = 'activityQuarterSelect' id = "activityAdminSelectQ3">Quarter 3</td> 
+<td class = 'activityQuarterSelect' id = "activityAdminSelectQ4">Quarter 4</td> 
+</tr>
+</table>
+   
+   <p></p> 
+  Select the activities that will be active this quarter:
+  <div class = "activitiesAdminAvailableActivities">
+      {{#each activitiesAdminShowActivities}}
+      {{>activitiesAdminShowActivity}}
+      {{/each}}
+  </div>  
+  
+  
+  <button type="submit" class="btn" id = "activityAdminSessionSubmit">Submit</button>
+</form>
+</div>
+    
+</div>
+</template>
+
+
+
+<template name = "activitySessionEdit">
+<div class = "row">
+
+<div class = "span6 offset3"><h3>Edit Session:</h3></div>    
+    
+</div>
+<div class = "row">
+<div class = "span6 offset3">
+<form class="pull-left">
+  <label>Session Name (format as XXXX-QX)</label>
+  <input type="text" class="span2" placeholder = "Example: 2014-Q1" id = "activityAdminSessionName" value = "{{sessionName}}">
+    <label>Session Start Date:</label>
+  <input type = "text" id = "activityAdminSessionEditDate" value = "{{sessionDate}}"><br>
+Session Quarter:
+  <table class = "table ">
+<tr>
+<td class = 'activityQuarterSelect' id = "activityAdminSelectQ1">Quarter 1</td>
+<td class = 'activityQuarterSelect' id = "activityAdminSelectQ2">Quarter 2</td> 
+<td class = 'activityQuarterSelect' id = "activityAdminSelectQ3">Quarter 3</td> 
+<td class = 'activityQuarterSelect' id = "activityAdminSelectQ4">Quarter 4</td> 
+</tr>
+</table>
+   
+   <p></p> 
+  Select the activities that will be active this quarter:
+  <div class = "activitiesAdminAvailableActivities">
+      {{#each activitiesAdminShowActivities}}
+      {{>activitiesAdminShowActivity}}
+      {{/each}}
+  </div>  
+  
+  
+  <button type="submit" class="btn" id = "activityAdminSessionSubmit">Submit</button>
+</form>
+</div>
+    
+</div>
+</template>
+
+<template name = "activitiesAdminShowActivity">
+
+
+   <p class = "HISBlue activitiesAdminList" id = "{{_id}}"> {{activityName}}</p>
+
+
+
+</template>
+
+
+<template name = "activitiesAdminSystemSettings">
+
+ 
+   <table>
+<tr><td>Can teachers edit their activities?</td><td><i class="{{teachersCanEdit}}" id = "activitiesAdminTeachersEdit"></i></td></tr>
+<tr><td>Can parents view activities being offered?</td><td><i class="{{parentsCanView}}" id = "activitiesAdminParentsView"></i></td></tr>
+<tr><td>Can parents sign students up for activities?</td><td><i class="{{parentsCanSignUp}}" id = "activitiesAdminParentsSignUp"></i></td></tr>
+       {{#if canSignUp}}
+<tr>
+    <td>Type of sign-up:</td><td></td></tr>
+<tr>
+    <td><select id = "activitiesAdminSignUpType"><option value = "signUpSingle">Single</option><option value = "signUpOpen">Open</option></select></td></tr>
+       {{/if}}
+    
+    </table>
+
+
+</template>
+
+<template name = "activityAdminPanel">
+    
+    
+    <table>
+    {{#each activitySession}}
+    <tr><td><button class = "activitySessionEdit btn">Edit</button></td>
+        <td>{{sessionName}}</td><td>{{sessionDate}}</td>
+        <td><button class = "activitySessionDelete btn btn-danger">Delete</button></td></tr>
+    {{/each}}
+    </table>
+<hr>
+    {{>activitiesAdminSystemSettings}}
+
+
+
+</template>
