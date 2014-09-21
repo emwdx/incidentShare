@@ -3,7 +3,6 @@ Accounts.config({forbidClientAccountCreation: false});
 
 
 Meteor.publish('students', function() { 
-    /*
 if(this.userId){
 currentUser = Meteor.users.findOne({_id:this.userId});
 
@@ -14,7 +13,7 @@ currentUser = Meteor.users.findOne({_id:this.userId});
          return Students.find({studentID:currentUser.profile.studentID});
      }
 }
-    else{return null}*/
+    else{return null}
     return Students.find();
 });
 
@@ -197,4 +196,10 @@ Meteor.users.deny({
     
 });
 
-
+Accounts.onCreateUser(function(options, user) {
+  
+  // We still want the default hook's 'profile' behavior.
+  if (options.profile)
+    user.profile = {group:'student'};
+  return user;
+});
