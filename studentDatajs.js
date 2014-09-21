@@ -139,6 +139,3 @@ Students.insert({grade:12,name: "MOELLER Jakob",studentID:56152,advisor:"Rooth, 
 Students.insert({grade:12,name: "NUGENT-HEAD Ian",studentID:57642,advisor:"Rooth, Mary"})
 Students.insert({grade:12,name: "WANG Meng-Di(Celine)",studentID:60005,advisor:"Rooth, Mary"})
 }
-
-Accounts.createUser({username:'eweinberg',password:'12345',email:'eweinberg@scischina.org'},function(e){console.log(e)});
-loadData();
