@@ -11,7 +11,7 @@ if (Meteor.isClient) {
   myHousePointsThisWeek: function(){
   var today = new Date();    
   var lastSunday = new Date(today.getTime()-today.getDay()*86400*1000);
-  var myHousePoints = HousePoints.find({reportedBy: Meteor.user().username,recordedTimeStamp:{$gte:lastSunday,$lte:today}})
+  var myHousePoints = HousePoints.find({reportedBy: Meteor.user().username,recordedTimeStamp:{$gte:lastSunday,$lte:today}});
   var totalPoints = 0;
   myHousePoints.forEach(function(entry){
       
@@ -19,7 +19,9 @@ if (Meteor.isClient) {
       
       
   });
-  return totalPoints;  
+      
+  Session.set('currentUserHousePointsThisWeek',totalPoints);
+  return Session.get('currentUserHousePointsThisWeek');  
       
       
   },

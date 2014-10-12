@@ -98,6 +98,7 @@ Template.housePointsHouseCompetition.events({
    var currentHouse = $('#housePointsCompetitionSelectHouse').val();
    var pointsComment = $('#housePointsCompetitionComment').val();
    var houseString;
+   if(currentHouse){
    switch($('#housePointsCompetitionSelectHouse').val()){
            
     case 'G':
@@ -125,7 +126,7 @@ Template.housePointsHouseCompetition.events({
         recordedTimeStamp: new Date,
    		date: new Date().toDateString(),
    		student: houseString,
-   		points: $("#housePointsCompetitionSelectPoints").val(),
+   		points: parseInt($("#housePointsCompetitionSelectPoints").val()),
    		comments: pointsComment,
    		house: currentHouse,
    		reportedBy: Meteor.user().username,
@@ -137,7 +138,8 @@ Template.housePointsHouseCompetition.events({
    $('#housePointsCompetitionSelectHouse').val('');
    $('#housePointsCompetitionComment').val('');
    $("#housePointsCompetitionSelectPoints").val('0');
- 
+   }
+    else{alert('Select the house receiving these points!')}
    }    
     
     

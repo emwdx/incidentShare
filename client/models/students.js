@@ -243,19 +243,21 @@ Template.selectedStudentInformation.events({
         recordedTimeStamp: new Date,
    		date: new Date().toDateString(),
    		student: currentStudentName,
-   		points: $("#addHousePoints").val(),
+   		points: parseInt($("#addHousePoints").val()),
    		comments: $(event.currentTarget).parent().find('[name=pointsComments]').val(),
    		house: currentHouse,
    		reportedBy: Meteor.user().username,
         schoolYear:'14-15'
   		 };
    
-   
+   if(earnedPoints.points){
    HousePoints.insert(earnedPoints);
-   
-   
    Session.set("currentlySelectedStudent","");
     $(".student").removeClass('selected');
+   }
+   else{alert('Select a number of points.');}
+   
+   
    },
      
  'click #editProfile': function(e){
