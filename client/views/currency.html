@@ -1,0 +1,89 @@
+<template name = "kwaiPage">
+<div class = "row">
+<div class = "span4" id = "giveKwaiForm">
+    {{>giveKwai}}
+</div>
+<div class = "span6">
+    {{>kwaiList}}
+</div>
+<div class = "span2">
+    {{>kwaiTable}}
+</div>
+</div>
+
+</template>
+
+
+<template name = "giveKwai">
+
+
+<form class = "form-horizontal"> 
+<div class = "control-group">
+<label>I'm giving:</label> 
+<select id = "selectUserKwai" class = "select">
+<option value = ''></option>
+{{#each user}} 
+<option value = "{{username}}">{{username}}</option>
+{{/each}}
+</select>
+</div>
+
+<div class = "control-group">
+<select id = "numOfKwai">
+<option value = ''></option>
+<option value = "1">1</option>
+<option value = "2">2</option> 
+<option value = "3">3</option> 
+</select>    
+</div>
+<div class = "control-group">
+<label>points for...  </label>    
+<input type = "text" placeholder = "Why are you giving these points?" id = "kwaiReason">    
+</div>
+<button class = "btn btn-primary" id = "submitKwai">Submit</button> 
+
+</form>
+ 
+
+</template>
+
+<template name = "kwaiItem">
+<div class = "row">
+<div class = "span2 kKwai">{{points}}</div>
+<div class = "span2 text-left"><strong>To: </strong> {{givenTo}}</div>
+<div class = "span2 text-left"><strong>From: </strong>  {{from}}</div>
+
+</div>
+<div class = "row">
+<div class = "span6 text-left">
+Reason:{{reason}}
+</div>
+</div>
+<div class = "row">
+<div class = "span4 text-left">
+Date: {{date.toDateString}}   
+</div>
+<div class = "span2">
+    {{likes}}<a href = "#"> Likes</a> 
+</div>
+</div>
+<hr class = "shortHr">
+</template>
+
+<template name = "kwaiList">
+<div class = "span6 bg-success">
+    {{#each kwai}}
+    {{>kwaiItem}}
+    {{/each}}
+</div>
+</template>
+
+<template name = "kwaiTable">
+<table class = "table">
+<tr><td>User</td><td>Given:</td><td>Received:</td></tr>
+{{#each user}} 
+<tr><td>{{username}}</td><td>{{kwaiGiven}}</td><td>{{kwaiReceived}}</td></tr>   
+{{/each}}
+    
+</table>
+</template>

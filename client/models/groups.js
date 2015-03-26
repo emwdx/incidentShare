@@ -25,8 +25,14 @@
   
   return (Session.get('showActivities')=='True');
   
+  },
+  currentlySelectedStudent: function(){
+      
+   currentStudent = Session.get('currentlySelectedStudent');
+   return Students.findOne({name:currentStudent});
+      
+      
   }
-   
   
   });
   
@@ -82,6 +88,30 @@
   $(event.currentTarget).addClass('active')
   Session.set("currentlySelectedStudent","");
   
+  },
+  'click #setDragonTimeLocation': function(e){
+      
+  var dragonTimeLocation = prompt("Enter the Dragon Time Location. Enter a '//' for a new line.");
+  if(dragonTimeLocation!=''){
+  var locationArray = dragonTimeLocation.split('//')
+  var locationString = ''
+  for(i = 0;i<locationArray.length;i++){
+   locationString += locationArray[i]+'<br>';   
+      
+  }
+  var id = systemVariables.findOne({name:'dragonTimeLocation'})._id;
+  systemVariables.update({_id:id},{$set:{value:locationString}});
+  }
+  },
+  'mouseenter #setDragonTimeLocation':function(e){
+      
+   Session.set('showDragonTimeLocation',true);   
+      
+  },
+  'mouseleave #setDragonTimeLocation':function(e){
+      
+   Session.set('showDragonTimeLocation',false);   
+      
   }
   
   });
@@ -90,6 +120,11 @@
           
        return Meteor.user().emails[0].address=='eweinberg@scischina.org';   
           
+      },
+      
+      showDragonTimeLocation: function(){
+          
+       return (Session.get('showDragonTimeLocation')==true);   
       }
       
   })

@@ -8,10 +8,12 @@
     
     {{> addActivity}}
 <div class = "row-fluid"> 
-{{>chatWindow}}
-	{{#if selectStudent}}
+<div class = "span6 outline">
+{{#if selectStudent}}
+    {{#with currentlySelectedStudent}}
+    {{>selectedStudentInformation}}
+    {{/with}}
     
-    {{> studentAutoComplete}}
     {{/if}}
     {{#if browseLog}}
     {{> incidentList}}
@@ -22,8 +24,12 @@
     {{/if}}
     {{#if showActivities}}
     {{> showActivities}}
-    {{/if}}
-    {{>selectedStudentInformation}}
+    {{/if}}    
+    
+    
+</div>
+	
+    {{>chatWindow}}
  
 </div>
 
@@ -35,28 +41,32 @@
 <div class="navbar">
   <div class="navbar-inner">
     <a class="brand HISText" href="/">Teachers</a>
-    <ul class = "nav">
-        
-    </ul>
+    {{>studentSearch}}
     <ul class="nav">
+    
      <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      Students
+      Students  
       <b class="caret"></b>
     </a>
     <ul class="dropdown-menu">
-      <li id = "selectStudent"><a href="#">Student Selection</a></li>
+      <!--<li id = "selectStudent"><a href="#">Student Selection</a></li>-->
       <li id = "browseLog"><a href="#">Browse Student Log</a></li> 
       <li id = "addStudents"><a href = "#addStudent" data-toggle="modal">Add Student</a></li>
     </ul>
   </li>
      <li class = "dropdown">   
-    <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">House Points <b class="caret"></b></a>
+    <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Houses <b class="caret"></b></a>
     <ul class = "dropdown-menu">        
       <li id = "housePoints"><a href="/">Browse House Points</a></li>
       <li id = "addHouseCompetitionPoints"><a href="/house/addpoints/">Add House Competition Points</a></li>
+        <li id = "setDragonTimeLocation"><a href = "#">Set Dragon Time Location</a></li>
+        {{#if showDragonTimeLocation}}
+        {{>dragonTimeLocation}}
+        {{/if}}
      </ul> 
      </li>
+       
        <!--
       <li class = "dropdown">
       <a href = "#" class="dropdown-toggle" data-toggle="dropdown">
@@ -72,14 +82,19 @@
           
      </ul>
      </li>
-    -->    
+    -->   
+    <li id = "communitycurrency"><a href = "/korykwai">Currency</a></li>
     </ul>
+      
     <ul class="nav">
-  
+    
+   
   
 </ul>
+     
   </div>
 </div>
+    
 </template>
 
 <template name = "studentContent">
@@ -174,7 +189,8 @@
 
 <div class = "row-fluid">
 <div class = "span6 offset3">
-<h4>Today's DragonTime location is: <span class = "HISBlue">{{dragonTimeLocation}}</span></h4>
+    
+<h4>{{>dragonTimeLocation}}</h4>
 </div>    
 
 </div>
@@ -190,4 +206,8 @@ Enter your information below and then click <span class = "text-info">here</span
 <hr>
 </div>    
 </div>   
+</template>
+<template name = "dragonTimeLocation">
+DragonTime location:<p> <span class = "HISBlue">{{{dragonTimeLocationString}}}</span></p>
+
 </template>

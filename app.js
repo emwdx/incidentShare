@@ -1,14 +1,43 @@
 
 if (Meteor.isClient) {
-     
+  Meteor.startup(function(){
+
+Meteor.subscribe('housePoints',function(){
+    
+Session.set('housePointsDataLoaded',true);    
+    
+});
+Meteor.subscribe('votes');
+
+Meteor.subscribe('students',function(){
+    
+  Session.set('data_loaded', true);   
+      
+});
+      
+Meteor.subscribe('incidents');
+
+Meteor.subscribe('chatMessages');
+Meteor.subscribe('activities');
+Meteor.subscribe('activitySession');
+Meteor.subscribe('systemVariables');
+Meteor.subscribe('userData');
+Meteor.subscribe('kkwai');
+});
+    
+    
+    
+    
   Accounts.config({forbidClientAccountCreation: false}); 
   
   Session.set("currentlySelectedStudent","");
   Session.set("validateStudentInfo", false) 
-  
+  Session.set('data_loaded', false); 
+    
   Template.header.helpers({
       
   myHousePointsThisWeek: function(){
+  if(Session.get('housePointsDataLoaded')){
   var today = new Date();    
   var lastSunday = new Date(today.getTime()-today.getDay()*86400*1000);
   var myHousePoints = HousePoints.find({reportedBy: Meteor.user().username,recordedTimeStamp:{$gte:lastSunday,$lte:today}});
@@ -16,13 +45,14 @@ if (Meteor.isClient) {
   myHousePoints.forEach(function(entry){
       
   totalPoints += parseFloat(entry.points);      
-      
+  
       
   });
       
   Session.set('currentUserHousePointsThisWeek',totalPoints);
+
   return Session.get('currentUserHousePointsThisWeek');  
-      
+  }
       
   },
   isTeacher:function(){
@@ -112,9 +142,9 @@ Template.loginForm.events({
     
 });
     
-Template.studentInformationFrontPage.helpers({
+Template.dragonTimeLocation.helpers({
     
-dragonTimeLocation: function(){
+dragonTimeLocationString: function(){
     
  var location = systemVariables.findOne({name:'dragonTimeLocation'});
  if(location){return location.value}   

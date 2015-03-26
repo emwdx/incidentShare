@@ -1,6 +1,12 @@
 Accounts.config({forbidClientAccountCreation: false}); 
 
-
+Meteor.publish("userData", function () {
+  if (this.userId) {
+    return Meteor.users.find();
+  } else {
+    this.ready();
+  }
+});
 
 Meteor.publish('students', function() { 
 if(this.userId){
@@ -14,7 +20,7 @@ currentUser = Meteor.users.findOne({_id:this.userId});
      }
 }
     else{return null}
-    return Students.find();
+    
 });
 
 Meteor.publish('incidents', function() { 
@@ -76,6 +82,17 @@ Meteor.publish('systemVariables',function(){
     
 });
 
+Meteor.publish('kkwai',function(){
+    
+if(this.userId){
+    
+  return Currency.find();  
+    
+}
+    
+    
+});
+
 Meteor.publish('votes',function(){
     if(this.userId){
    return Votes.find({});
@@ -129,6 +146,11 @@ insert: function(){
 update: function(){
     
  return (Meteor.user().profile.group=='teacher');   
+    
+},
+    
+remove: function(){
+return (Meteor.user().profile.group=='teacher');      
     
 }
 });
@@ -189,6 +211,28 @@ return true;
 }
     
 })
+
+Currency.allow({
+    
+insert: function(){
+    
+ return (Meteor.user().profile.group=='teacher');   
+    
+},
+    
+remove: function(){
+    
+return (Meteor.user().profile.group=='teacher');    
+    
+},
+    
+update: function(){
+    
+return (Meteor.user().profile.group=='teacher'); 
+    
+}
+    
+});
 
 Meteor.users.deny({
    update: function(){return true;},

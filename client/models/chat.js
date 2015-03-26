@@ -1,6 +1,5 @@
 
 
-
 Template.chatWindow.helpers({
   
     chatMessage: function(){return ChatMessages.find({},{sort:{submittedAt:-1}})}
@@ -18,14 +17,14 @@ Template.chatWindow.events({
         
     submittedAt: new Date(),
     user: Meteor.user().username,
-    message: $('#chatMessage').val(),
+    message: $('#chatEntry').val(),
     schoolYear:'14-15'
         
         
     }
     
     ChatMessages.insert(newMessage);
-    $('#chatMessage').val('');
+    $('#chatEntry').val('');
        
    }
      

@@ -112,6 +112,12 @@ width:70%;
     width: 100%;   
     
 }
+
+#chatEntry{
+    
+width:95%;
+}
+
 #studentList{
     
 height: 400px;
@@ -195,3 +201,23 @@ background:#EEE;
     
     
 }
+
+shortHr{
+    
+ width:50%;   
+    
+}
+
+.kKwai{
+    
+ font-size:20px;
+ color:red;
+    
+}
+
+#communitycurrency{
+    
+ opacity:0;   
+    
+}
+

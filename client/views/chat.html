@@ -1,9 +1,9 @@
 <template name = "chatWindow">
-<div class = "span3 chatWindow outline">
-<form class="form-search">
-  <textarea class="input-medium search-query" rows = "4" placeholder = "Enter message here." id = "chatMessage" cols = "80"></textarea>
+<div class = "span6 chatWindow outline">
+
+  <textarea  rows = "2" placeholder = "Enter message here." id = "chatEntry"></textarea>
   <button class="btn" id = 'sendChatMessage'>Send Message</button>
-</form>
+
 <table class = "table  table-condensed" id = "chatTable">
     {{#each chatMessage}}
     {{>chatLine}}

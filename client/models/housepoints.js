@@ -1,4 +1,6 @@
- Template.housePointsList.helpers({
+
+
+Template.housePointsList.helpers({
   
   addPoints: function(){
   
@@ -142,5 +144,14 @@ Template.housePointsHouseCompetition.events({
     else{alert('Select the house receiving these points!')}
    }    
     
+    
+});
+
+Tracker.autorun(function(){
+    
+if(Session.get('housePointsDataLoaded')){
+
+
+}
     
 });

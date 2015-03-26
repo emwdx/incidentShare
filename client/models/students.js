@@ -1,15 +1,4 @@
 
-Meteor.subscribe('housePoints');
-Meteor.subscribe('votes');
-
-Meteor.subscribe('students');
-Meteor.subscribe('incidents');
-
-Meteor.subscribe('chatMessages');
-Meteor.subscribe('activities');
-Meteor.subscribe('activitySession');
-Meteor.subscribe('systemVariables');
-
 
 
 Template.selectGrade.events({
@@ -252,6 +241,8 @@ Template.selectedStudentInformation.events({
    
    if(earnedPoints.points){
    HousePoints.insert(earnedPoints);
+   var totalPoints = Session.get('currentUserHousePointsThisWeek');
+   Session.set('currentUserHousePointsThisWeek',totalPoints+earnedPoints.points);
    Session.set("currentlySelectedStudent","");
     $(".student").removeClass('selected');
    }
@@ -332,16 +323,17 @@ Template.selectedStudentInformation.helpers({
       
   }
        
-   }
-  
-    
+   }    
     
     
 });
 
+
  Template.studentAutoComplete.rendered = function(){
-   var studentList = _(Students.find({},{fields:{name:true}}).fetch()).pluck('name'); 
-   $("#studentComplete").autocomplete({
+     
+     var studentList = _(Students.find({},{fields:{name:true}}).fetch()).pluck('name'); 
+     
+   $("#studentSearchComplete").autocomplete({
     minLength:2,
     source: studentList,
     select: function( e, ui ) {
@@ -352,3 +344,48 @@ Template.selectedStudentInformation.helpers({
    
 }); 
 };
+
+Template.studentAutoComplete.events({
+   
+'keydown #studentSearch': function(e){
+ 
+if (e.keyCode == '13') {
+     e.stopPropagation()
+
+   }    
+    
+}
+    
+});
+
+Tracker.autorun(function(){
+    
+if(Session.get('data_loaded')){
+   
+   var studentList = _(Students.find({},{fields:{name:true}}).fetch()).pluck('name'); 
+    
+   Session.set('studentSearchNames',studentList);
+    //console.log(Session.get('studentSearchNames'));    
+  
+   $("#studentSearchComplete").autocomplete({
+    minLength:2,
+    source: Session.get('studentSearchNames'),
+    select: function( e, ui ) {
+  
+  currentStudent = ui.item.value;
+  Session.set("currentlySelectedStudent",currentStudent);
+  Session.set('selectStudent','True');
+  Session.set('browseLog','False');
+  Session.set('housePoints','False');
+  Session.set('showActivities','False');
+  
+  }   
+   
+});
+}
+    
+
+      
+        
+    
+});

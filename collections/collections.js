@@ -7,3 +7,5 @@ Activities = new Meteor.Collection('activities');
 ActivitySession = new Meteor.Collection('activitySession');
 systemVariables = new Meteor.Collection('systemVariables');
 Votes = new Meteor.Collection('votes');
+
+Currency = new Meteor.Collection('kkwai');
