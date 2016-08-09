@@ -1,37 +1,42 @@
 
 
 <template name = "selectedStudentInformation">
-    
+
 {{#if studentIsSelected}}
-<div id = "studentInformation" > 
-    
+<div id = "studentInformation" >
+
 <!--
 <button id = 'editProfile' href = "#editStudent"><h6>Edit Profile</h6></button><button id = 'viewStudentPoints'><h6>View Points Earned</h6></button>
 -->
 
 <table class = "table">
 <tr><td>Name:</td><td>{{name}}</td></tr>
-<tr><td>Grade:</td><td>{{grade}}</td></tr>  
+<tr><td>Grade:</td><td>{{grade}}</td></tr>
 <tr><td>Advisor:</td><td>{{advisor}}</td></tr>
 <tr><td>Parent Emails:</td><td>{{guardianemail1}}<br>{{guardianemail2}}</td></tr>
 
-    
-    
-</table>  
+
+
+</table>
 
 <div class = "form-group">
-<label class = "sr-only {{houseClass}}">Add House Points</label>
-<select name = "addHousePoints" class = "form-control input-xxmed" id = "addHousePoints">
+<label class = "{{houseClass}}">Add House Points:</label>
+
+<select name = "addHousePoints" class = "form-control" id = "addHousePoints">
 <option value ="0"  selected ="selected">Select Points to Add</option>
 <option value="1" >1 Point</option>
 <option value="2">2 Points</option>
 <option value="3">3 Points</option>
 </select>
-    
-    
-    <input type = "text" class = "input-xxmed" rows = "2" placeholder = "Why were these points earned?" name = "pointsComments"><button  class = "btn addHousePoints HISbutton "> Add house points</button>
-    
 </div>
+
+<div class = "form-group">
+
+    <input type = "text" class = "form-control" rows = "2" placeholder = "Why were these points earned?" name = "pointsComments">
+
+</div>
+    <button  class = "btn addHousePoints HISbutton "> Add house points</button>
+
 
 
 </div>
@@ -106,7 +111,7 @@ Enter the student's name:
 </template>
 
 <template name = "addStudents">
-       
+
 <!-- Modal -->
 <div id="addStudent" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
@@ -114,17 +119,17 @@ Enter the student's name:
     <h3 id="myModalLabel">Add Student</h3>
   </div>
   <div class="modal-body">
-  
-      
+
+
 <form class="form-horizontal">
 <div class="control-group">
-<label class = "control-label">Name:</label> 
+<label class = "control-label">Name:</label>
 <div class = "controls">
 <input type = "text" name = "studentName">
  </div>
   </div>
 <div class="control-group">
-<label class = "control-label">Grade:</label> 
+<label class = "control-label">Grade:</label>
 <div class = "controls">
 <select name = "grade">
 <option value ="0"  selected ="selected"></option>
@@ -138,16 +143,16 @@ Enter the student's name:
 </select>
  </div>
   </div>
-        
+
   <div class="control-group">
     <label class="control-label" for="studentID">ID Number:</label>
     <div class="controls">
       <input type="number" name="studentID" placeholder="Student ID (XXXXX)">
     </div>
   </div>
-  
+
   <div class="control-group">
-    <label class = "control-label">Advisor:</label> 
+    <label class = "control-label">Advisor:</label>
 <div class = "controls">
 <select name = "advisor">
 <option value ="0"  selected ="selected"></option>
@@ -162,11 +167,11 @@ Enter the student's name:
 <option value="Rooth, Mary">Rooth, Mary</option>
 
 </select>
- </div>    
- </div>      
+ </div>
+ </div>
 
 <div class="control-group">
-<label class = "control-label">Gender:</label> 
+<label class = "control-label">Gender:</label>
 <div class = "controls">
 <select name = "gender">
 <option value ="0"  selected ="selected"></option>
@@ -177,7 +182,7 @@ Enter the student's name:
   </div>
 
 <div class="control-group">
-<label class = "control-label">House:</label> 
+<label class = "control-label">House:</label>
 <div class = "controls">
 <select name = "house">
 <option value ="0"  selected ="selected"></option>
@@ -187,67 +192,67 @@ Enter the student's name:
 <option value="B">Winter</option>
 </select>
  </div>
-  </div>    
-    
+  </div>
+
 <div class="control-group">
-<label class = "control-label">Date of Birth:</label> 
+<label class = "control-label">Date of Birth:</label>
 <div class = "controls">
 <input type = "text" name = "dob">
 </div>
-</div>    
+</div>
 
 <div class="control-group">
-<label class = "control-label">Nationality:</label> 
+<label class = "control-label">Nationality:</label>
 <div class = "controls">
 <input type = "text" name = "nationality">
 </div>
-</div>    
-    
+</div>
+
 <div class="control-group">
-<label class = "control-label">Guardian Email 1:</label> 
+<label class = "control-label">Guardian Email 1:</label>
 <div class = "controls">
 <input type = "text" name = "guardianemail1">
 </div>
 </div>
-    
+
 <div class="control-group">
-<label class = "control-label">Guardian Email 2:</label> 
+<label class = "control-label">Guardian Email 2:</label>
 <div class = "controls">
 <input type = "text" name = "guardianemail2">
 </div>
 </div>
 
 <div class="control-group">
-<label class = "control-label">Father Phone:</label> 
+<label class = "control-label">Father Phone:</label>
 <div class = "controls">
 <input type = "text" name = "fatherphone">
 </div>
 </div>
-    
 
-    
+
+
 <div class="control-group">
-<label class = "control-label">Mother Phone:</label> 
+<label class = "control-label">Mother Phone:</label>
 <div class = "controls">
 <input type = "text" name = "motherphone">
 </div>
 </div>
-    
-    
-</form>  
-       
+
+
+</form>
+
 </div>
-    
+
 <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     <button class="btn btn-primary" id = "addStudentButton">Add Student</button>
   </div>
 </div>
-      
+
 </template>
 
 <template name = "editStudents">
-       
+
 <!-- Modal -->
 <div id="editStudent" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
@@ -255,17 +260,17 @@ Enter the student's name:
     <h3 id="myModalLabel">Edit Student: {{currentlySelectedStudent}}</h3>
   </div>
   <div class="modal-body">
-  
-      
+
+
 <form class="form-horizontal">
 <div class="control-group">
-<label class = "control-label">Name:</label> 
+<label class = "control-label">Name:</label>
 <div class = "controls">
 <input type = "text" name = "studentName" >
  </div>
   </div>
 <div class="control-group">
-<label class = "control-label">Grade:</label> 
+<label class = "control-label">Grade:</label>
 <div class = "controls">
 <select name = "grade">
 <option value ="0"  selected ="selected"></option>
@@ -279,16 +284,16 @@ Enter the student's name:
 </select>
  </div>
   </div>
-        
+
   <div class="control-group">
     <label class="control-label" for="studentID">ID Number:</label>
     <div class="controls">
       <input type="number" name="studentID" placeholder="Student ID (XXXXX)" >
     </div>
   </div>
-  
+
   <div class="control-group">
-    <label class = "control-label">Advisor:</label> 
+    <label class = "control-label">Advisor:</label>
 <div class = "controls">
 <select name = "advisor">
 <option value ="0"  ></option>
@@ -303,11 +308,11 @@ Enter the student's name:
 <option value="Rooth, Mary">Rooth, Mary</option>
 
 </select>
- </div>    
- </div>      
+ </div>
+ </div>
 
 <div class="control-group">
-<label class = "control-label">Gender:</label> 
+<label class = "control-label">Gender:</label>
 <div class = "controls">
 <select name = "gender">
 <option value ="0" ></option>
@@ -318,7 +323,7 @@ Enter the student's name:
   </div>
 
 <div class="control-group">
-<label class = "control-label">House:</label> 
+<label class = "control-label">House:</label>
 <div class = "controls">
 <select name = "house">
 <option value ="0"  ></option>
@@ -328,68 +333,68 @@ Enter the student's name:
 <option value="B">Winter</option>
 </select>
  </div>
-  </div>    
-    
+  </div>
+
 <div class="control-group">
-<label class = "control-label">Date of Birth:</label> 
+<label class = "control-label">Date of Birth:</label>
 <div class = "controls">
 <input type = "text" name = "dob" >
 </div>
-</div>    
+</div>
 
 <div class="control-group">
-<label class = "control-label">Nationality:</label> 
+<label class = "control-label">Nationality:</label>
 <div class = "controls">
 <input type = "text" name = "nationality" >
 </div>
-</div>    
-    
+</div>
+
 <div class="control-group">
-<label class = "control-label">Guardian Email 1:</label> 
+<label class = "control-label">Guardian Email 1:</label>
 <div class = "controls">
 <input type = "text" name = "guardianemail1" >
 </div>
 </div>
-    
+
 <div class="control-group">
-<label class = "control-label">Guardian Email 2:</label> 
+<label class = "control-label">Guardian Email 2:</label>
 <div class = "controls">
 <input type = "text" name = "guardianemail2" >
 </div>
 </div>
 
 <div class="control-group">
-<label class = "control-label">Father Phone:</label> 
+<label class = "control-label">Father Phone:</label>
 <div class = "controls">
 <input type = "text" name = "fatherphone" >
 </div>
 </div>
-    
 
-    
+
+
 <div class="control-group">
-<label class = "control-label">Mother Phone:</label> 
+<label class = "control-label">Mother Phone:</label>
 <div class = "controls">
 <input type = "text" name = "motherphone" >
 </div>
 </div>
-    
-    
-</form>  
-       
+
+
+</form>
+
 </div>
-    
+
 <div class="modal-footer">
     <button class = 'deleteStudent btn'>Delete Student</button>
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     <button class="btn btn-primary" id = "updateStudentButton">Update Student</button>
   </div>
 </div>
-      
+
 </template>
 
 <template name = "viewIncidents">
-       
+
 
 <div id="viewIncidents" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
@@ -399,26 +404,26 @@ Enter the student's name:
   <div class="modal-body">
   <table class = "table  table-condensed">
       {{#each incidents}}
-      
-      
+
+
       <tr class = {{winClass}}><td><h5>{{date}}</h5></td><td><h6>{{comments}}</h6></td><td><h6 class = "text-info">{{user}}</h6></td></tr>
-      
+
       {{/each}}
-      
+
        </table>
 </div>
-    
+
 <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    
+
   </div>
 </div>
-      
+
 </template>
 
 <template name = "incidentBadge">
     {{#if numberOfIncidents}}
-<span class="badge badge-inverse">{{numberOfIncidents}}</span>    
+<span class="badge badge-inverse">{{numberOfIncidents}}</span>
     {{/if}}
 
 </template>
@@ -436,14 +441,14 @@ Enter the student's name:
       {{#each addPoints}}
 <tr class = {{houseClass}}><td ><h5>{{date}}</h5></td><td><h5>{{points}}</h5></td><td><h6>{{comments}}</h6></td><td>{{reportedBy}}</td></tr>
 {{/each}}
-      
+
        </table>
 </div>
-    
+
 <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    
+
   </div>
-</div>    
- 
+</div>
+
 </template>

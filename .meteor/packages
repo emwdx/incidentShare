@@ -3,10 +3,13 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
-accounts-ui
+standard-app-packages
 accounts-password
-bootstrap
-force-ssl
-iron:router@1.0.0-pre2
-
+blaze
+iron:router
+alanning:roles
+accounts-ui
+twbs:bootstrap
+useraccounts:bootstrap
+cfly15:manage-users
+standard-minifiers

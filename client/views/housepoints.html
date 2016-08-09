@@ -19,34 +19,42 @@ House Points:
 </template>
 
 <template name = "housePointsTotals">
-<div class = "row-fluid">
-<div class = "span6"><span class = "houseTotal text-success">Green:<br> {{spring}}</span></div>
-<div class = "span6"><span class = "houseTotal text-error">Red:<br> {{summer}}</span></div>
+<div class = "row">
+<div class = "col-md-6"><span class = "houseTotal green-house">Green:<br> {{spring}}</span></div>
+<div class = "col-md-6"><span class = "houseTotal red-house">Red:<br> {{summer}}</span></div>
 </div>
-<div class = "row-fluid">
-<div class = "span6"><span class = "houseTotal text-warning">Yellow: <br>{{fall}}</span></div>
-<div class = "span6"><span class = "houseTotal text-info">Blue: <br>{{winter}}</span></div>       
-</div>    
+<div class = "row">
+<div class = "col-md-6"><span class = "houseTotal yellow-house">Yellow: <br>{{fall}}</span></div>
+<div class = "col-md-6"><span class = "houseTotal blue-house">Blue: <br>{{winter}}</span></div>
+</div>
 
 
 </template>
 
 <template name = "housePointsHouseCompetition">
+  <div class = "row">
+  <div class = "col-md-6 outline ">
+
 <h3>Enter the points earned below:</h3>
-<select id = "housePointsCompetitionSelectHouse">
+<div class = "form-group">
+<select id = "housePointsCompetitionSelectHouse" class = "form-control">
 <option value = "">Select House</option>
-<option value = "G">Spring(Green)</option>
-<option value = "R">Summer(Red)</option>
-<option value = "Y">Fall(Yellow)</option>
-<option value = "B">Winter(Blue)</option>
+<option value = "G">Green</option>
+<option value = "R">Red</option>
+<option value = "Y">Yellow</option>
+<option value = "B">Blue</option>
 </select>
-<input id = "housePointsCompetitionSelectPoints" type = "number" min="0" max="50" placeholder = "Enter number of points">
-<p></p>
-<input id = "housePointsCompetitionComment" type = "text" placeholder="How were these points earned?">
-<p></p>
+</div>
+<div class = "form-group">
+<input id = "housePointsCompetitionSelectPoints" type = "number" min="0" max="50" placeholder = "Enter number of points" class = "form-control">
+</div>
+<div class = "form-group">
+<input id = "housePointsCompetitionComment" type = "text" placeholder="How were these points earned?" class = "form-control">
+</div>
+
 <button class = "btn btn-primary" id = "housePointsCompetitionPointsSubmit">Submit house points</button>
 <h4>Click on 'Teachers' to go back to the main page.</h4>
 
-
+</div>
+</div>
 </template>
-

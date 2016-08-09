@@ -1,12 +1,10 @@
 /* CSS declarations go here */
-.container{
- 
+.containerMod{
+
     margin-top:10px;
-    margin-left:auto;
+    width: 95%;
+    margin-left: auto;
     margin-right:auto;
-    width:95%;
-    
-    
 }
 
 
@@ -38,10 +36,10 @@ color: #020A66
 }
 
 .HISTagline{
-    
+
  font-size: 80%;
  margin-top:-10px;
-    
+
 }
 
 .HISBannerText{
@@ -66,158 +64,174 @@ width: 100%;
 }
 
 .no-house{
-    
+
  color:black
-    
+
 }
 
 .houseTotal{
-    
+
  font-size:110%;
  padding:10px;
- 
-    
+
+
 }
 
 .badge-inverse{
-    
+
  color:#020A66;
     background:#EBA100;
-    
+
 }
 .chatWindow{
-    
+
     overflow:auto;
     height: 300px;
     display:inline;
-   
-    
+
+
 }
 .chatUser{
- width:30%;  
-    
-    
-    
+ width:30%;
+
+
+
 }
 .chatMessage{
- 
+
 width:70%;
-    
-    
+
+
 }
 #chatTable{
-    
- word-wrap: break-word; 
+
+ word-wrap: break-word;
     table-layout:fixed;
-    width: 100%;   
-    
+    width: 100%;
+
 }
 
 #chatEntry{
-    
+
 width:95%;
 }
 
 #studentList{
-    
+
 height: 400px;
 overflow:auto;
 
-    
+
 }
 .outline{
-    
+
   border:solid #020A66 1px;
  border-radius: 5px;
- padding: 5px;
- margin-left: 15px;
- margin-top: -5px;
+ padding: 3px;
  overflow:auto;
  height:400px;
-    
+
 }
 
 .outlineLogin{
-    
-  border:solid #020A66 1px;
- border-radius: 5px;
+
+
  padding: 5px;
- margin-left: 15px;
- margin-top: -5px;
- 
-    
+
 }
 
 
 
 studentInformation{
-    
+
     overflow:auto;
     height: 400px;
     display:inline;
-   
-    
 }
 .selected{
-    
+
     background:#EBA100;
-    
-    
-    
+
 }
 
 .HISGold{
-    
+
     color:#EBA100;
-    
+
 }
 .HISBlue{
-    
+
     color:#020A66;
-    
+
 }
 .outlineHP{
-    
- border:solid #020A66 1px;
- border-radius: 5px;
+
+
  padding: 5px;
- margin-left: 15px;
- margin-top: -5px;
  overflow:auto;
-    
+
 }
 
 tr:hover{
-    
-background:#EEE;    
-    
-    
+
+background:#EEE;
+
+
 }
 
 #housePointsCompetitionComment{
-    
- width:50%;   
-    
-    
-    
+
+ width:50%;
 }
 
 shortHr{
-    
- width:50%;   
-    
+
+ width:50%;
+
 }
 
 .kKwai{
-    
+
  font-size:20px;
  color:red;
-    
+
 }
 
 #communitycurrency{
-    
- opacity:0;   
-    
+
+ opacity:0;
+
 }
 
+.red-house{
+
+color: rgb(232,67,60);
+
+}
+.blue-house{
+
+color: rgb(10,114,205);
+
+}
+.green-house{
+
+color: rgb(111,193,132);
+
+}
+.yellow-house{
+
+color: rgb(236,186,32);
+
+}
+
+.noBullets{
+
+  list-style-type: none;
+
+}
+
+#userAdminContainer{
+
+background-color:#ccc;  
+
+}

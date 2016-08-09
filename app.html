@@ -1,33 +1,32 @@
 
-  
+
 
 <head>
     <title>DragonTrack</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link rel="icon" sizes="16x16 32x32" href="/favicon.jpg?v=2">
 </head>
 
 
 <template name = "outline">
 
-    <div class = "container">
+    <div class = "containerMod">
         {{> header}}
-        
+
         {{#if currentUser}}
         {{> userBar}}
         {{/if}}
-        
+
         {{>yield}}
-        
+
     <hr>
-    <div class = "row-fluid">
-     <footer><em>Created by Evan Weinberg, Copyright 2014-2015</em></footer> 
-        
+    <div class = "row">
+     <footer><em>Created by Evan Weinberg, Copyright 2014-2015</em></footer>
+
     </div>
-    
+
     </div>
-  
+
 
 
 
@@ -35,30 +34,30 @@
 </template>
 
 <template name = "header">
-  <div class = "row-fluid">
-    <div class = "span3 outlineHP">
+  <div class = "row row-eq-height">
+    <div class = "col-md-3 outlineHP">
     <p class = "text-center">
      {{>housePointsTotals}}
     </p>
-        
+
     </div>
-    <div class = "span6"> <h1 class = "text-center HISBannerText"><span class = "HISGold">Dragon</span><span class = "HISBlue">Track</span></h1><p></p>
-    
-        
-   
+    <div class = "col-md-6"> <h1 class = "text-center HISBannerText"><span class = "HISGold">Dragon</span><span class = "HISBlue">Track</span></h1><p></p>
+
     </div>
     {{#if currentUser}}
-    <div class = "span3 outlineLogin">
-        
-    <h3 class = "text-center" style = "height: 50px;">{{> loginButtons}}
-        
-            
-    </h3>
+    <div class = "col-md-3 outlineLogin">
+  <ul class = "noBullets">
+    <span class = "text-center" style = "height: 50px;">
+
+      {{> loginButtons}}
+
+    </span>
         {{#if isTeacher}}
      <p class = "text-center">You awarded <span class = "HISBlue">{{myHousePointsThisWeek}}</span> house points this week.   </p>{{/if}}
+   </ul>
     </div>
     {{/if}}
-    
+
     </div>
 
 <p></p>
@@ -66,25 +65,25 @@
 </template>
 
 <template name = "mainContent">
-  
+
 {{#if currentUser}}
-    {{#if isTeacher}}
+    {{#if isInRole 'admin,teacher'}}
     {{>teacherContent}}
     {{/if}}
-    {{#if isStudent}}
+    {{#if isInRole 'student'}}
     {{>studentContent}}
     {{/if}}
 {{/if}}
-    
+
 </template>
 
 <template name = "userBar">
     {{#if isTeacher}}
-     
+
     {{> teacherButtonBar}}
-        
+
     {{/if}}
-    
+
     {{#if isStudent}}
     {{> studentButtonBar}}
     {{/if}}
@@ -95,47 +94,21 @@
 
 
 <template name = "loginForm">
- <div class = "row-fluid">
-     
- <div class = "span6 offset3">
+ <div class = "row">
 
- <h2 class = "text-center"><a href = "/student/">Click here for DragonTime!</a></h2>    
- </div>   
-     
-    
+ <div class = "col-md-6 col-md-offset-3">
+
+ <h2 class = "text-center"><a href = "/student/">Click here for DragonTime!</a></h2>
  </div>
- <div class = "row-fluid">
-    
-    <div class = "span6 offset3">
-    {{#unless IsLoggingIn}}
-<form class="form-horizontal">
-  <div class="control-group">
-    <label class="control-label" for="inputEmail">Email</label>
-    <div class="controls">
-      <input type="text" id="inputEmail" placeholder="Email">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputPassword">Password</label>
-    <div class="controls">
-      <input type="password" id="inputPassword" placeholder="Password">
-    </div>
-  </div>
-   <div class="control-group">
-   <div class = "controls">
-    <button type="submit" class="btn" id = "loginButton">Sign in</button>
-    </div>
-  </div>
-  </form>
-    {{/unless}}
- 
 
- {{#if IsLoggingIn}}
-<p class = "text-center">Logging in to DragonTrack...</p>
-    {{/if}}
-  
+
+ </div>
+ <div class = "row">
+
+    <div class = "col-md-6 col-md-offset-3">
+    {{>atForm}}
     </div>
-    </div>
+  </div>
 </template>
 
 
@@ -150,4 +123,10 @@ DragonTrack is loading - please be patient.
 
 You are not allowed to access that page. Go back!
 
+</template>
+
+<template name="adminTemplate">
+<div id = "userAdminContainer">
+        {{> accountsAdmin}}
+</div>
 </template>

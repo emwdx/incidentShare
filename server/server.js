@@ -1,32 +1,35 @@
-Accounts.config({forbidClientAccountCreation: false}); 
+//Accounts.config({forbidClientAccountCreation: false});
 
-Meteor.publish("userData", function () {
-  if (this.userId) {
-    return Meteor.users.find();
-  } else {
-    this.ready();
-  }
-});
+Accounts.validateNewUser(function (user) {
+   var loggedInUser = Meteor.user();
 
-Meteor.publish('students', function() { 
+   if (Roles.userIsInRole(loggedInUser, ['admin'])) {
+     // NOTE: This example assumes the user is not using groups.
+     return true;
+   }
+
+   throw new Meteor.Error(403, "Not authorized to create new users");
+ });
+
+Meteor.publish('students', function() {
 if(this.userId){
 currentUser = Meteor.users.findOne({_id:this.userId});
 
-    if(currentUser.profile.group=='teacher'){
-    return Students.find();
+    if(Roles.userIsInRole(currentUser,['teacher','admin'])){
+    return Students.find({},{fields:{advisor:1,gender:1,grade:1,house:1,name:1}});
     }
-     else if(currentUser.profile.group=='student'){
+     else if(Roles.userIsInRole(currentUser,['student'])){
          return Students.find({studentID:currentUser.profile.studentID});
      }
 }
     else{return null}
-    
+
 });
 
-Meteor.publish('incidents', function() { 
+Meteor.publish('incidents', function() {
 if(this.userId){
-currentUser = Meteor.users.findOne({_id:this.userId});    
-    if(currentUser.profile.group=='teacher'){
+currentUser = Meteor.users.findOne({_id:this.userId});
+    if(Roles.userIsInRole(currentUser,['teacher','admin'])){
     return Incidents.find({schoolYear:'14-15'});
 }
      else{return null};
@@ -34,63 +37,44 @@ currentUser = Meteor.users.findOne({_id:this.userId});
 else{return null;}
 });
 
-Meteor.publish('chatMessages', function() { 
+Meteor.publish('chatMessages', function() {
 if(this.userId){
-currentUser = Meteor.users.findOne({_id:this.userId});    
-    if(currentUser.profile.group=='teacher'){
-    return ChatMessages.find({schoolYear:'14-15'});
+currentUser = Meteor.users.findOne({_id:this.userId});
+    if(Roles.userIsInRole(currentUser,['teacher','admin'])){
+    return ChatMessages.find({schoolYear:'15-16'});
 }
-     if(currentUser.profile.group=='student'){return null};
+     else{return null};
 }
-    
+
 else{return null}
 });
 
-Meteor.publish('activities', function() { 
-if(this.userId){
-currentUser = Meteor.users.findOne({_id:this.userId});     
-    if(currentUser.profile.group=='teacher'){
-    return Activities.find();
-    }
-     if(currentUser.profile.group=='student'){return null};
-}
-else{return null;}
+
+
+Meteor.publish('housePoints', function() {
+
+
+     return HousePoints.find({schoolYear:"15-16"});
+
 });
 
-Meteor.publish('housePoints', function() { 
-         
-     
-     return HousePoints.find({schoolYear:"14-15"});
-     
-});
-Meteor.publish('activitySession',function(){
-if(this.userId){
-currentUser = Meteor.users.findOne({_id:this.userId});       
-    if(currentUser.profile.group=='teacher'){
-     return ActivitySession.find();   
-    }
-    else{return null;}
-}
-else{return null;}
-    
-});
 Meteor.publish('systemVariables',function(){
-   
-     return systemVariables.find();   
-   
-    
-    
+
+     return systemVariables.find();
+
+
+
 });
 
 Meteor.publish('kkwai',function(){
-    
+
 if(this.userId){
-    
-  return Currency.find();  
-    
+
+  return Currency.find({schoolYear:'15-16'});
+
 }
-    
-    
+
+
 });
 
 Meteor.publish('votes',function(){
@@ -100,150 +84,193 @@ Meteor.publish('votes',function(){
     else{return Votes.find({},{fields:{choices:1,voteDescription:1,active:1}})}
 });
 
+
+
+
 Meteor.methods({
-    
+
 validateStudent: function(currentStudentID,currentStudentName){
 
-var selectedStudent = Students.findOne({studentID:currentStudentID}); 
-    
- 
+var selectedStudent = Students.findOne({studentID:currentStudentID});
+
+
 if(selectedStudent){
 
    return((currentStudentID == selectedStudent.studentID)&&(currentStudentName == selectedStudent.name.slice(0,3)));
-    
+
 }
-else{return false};    
+else{return false};
+},
+
+getRandomStudentInfo: function(){
+
+var returnedStudents = Students.find().fetch();
+if(returnedStudents){
+
+var students = returnedStudents[Math.round(Math.floor(Math.random()*returnedStudents.length))];
+  return students;
+
 }
-    
-    
+
+else{
+
+   return {house:"P",grade:13,gender:'Martian'};
+}
+}
+
+
 });
 
 
 
 ChatMessages.allow({
-    
+
 insert: function(){
-    
- return Meteor.user();   
-    
+
+ return Roles.userIsInRole(currentUser,['teacher','admin']);
+
 },
 update: function(){
-    
- return Meteor.user();   
-    
+
+ return Roles.userIsInRole(currentUser,['teacher','admin']);
+
 }
-    
-    
+
+
 });
 
 Students.allow({
-    
+
 insert: function(){
-    
- return true//(Meteor.user().profile.group=='teacher');   
-    
-},
-update: function(){
-    
- return (Meteor.user().profile.group=='teacher');   
-    
-},
-    
-remove: function(){
-return (Meteor.user().profile.group=='teacher');      
-    
-}
-});
-    
-systemVariables.allow({
-    
-insert: function(){
-    
- return (Meteor.user().profile.group=='teacher');    
-    
+
+ return Roles.userIsInRole(currentUser,['teacher','admin']);
+
 },
 update: function(){
 
-return (Meteor.user().profile.group=='teacher');   
-    
+ return Roles.userIsInRole(currentUser,['teacher','admin']);
+
+},
+
+remove: function(){
+return Roles.userIsInRole(currentUser,['teacher','admin']);
+
+}
+});
+
+systemVariables.allow({
+
+insert: function(){
+
+ return Roles.userIsInRole(currentUser,['teacher','admin']);
+
+},
+update: function(){
+
+return Roles.userIsInRole(currentUser,['teacher','admin']);
+
 }
 });
 
 HousePoints.allow({
-    
+
 insert: function(){
-    
- return (Meteor.user().profile.group=='teacher');    
-    
+
+ return Roles.userIsInRole(currentUser,['teacher','admin']);
+
 },
 update: function(){
 
-return (Meteor.user().profile.group=='teacher');   
-    
+return Roles.userIsInRole(currentUser,['teacher','admin']);
+
+},
+remove:function(){
+
+return Roles.userIsInRole(currentUser,['teacher','admin']);
 }
 });
 
 Incidents.allow({
-    
+
 insert: function(){
-    
- return (Meteor.user().profile.group=='teacher');      
-    
+
+ return Roles.userIsInRole(currentUser,['teacher','admin']);
+
 },
 update: function(){
 
-return (Meteor.user().profile.group=='teacher');   
-    
+return Roles.userIsInRole(currentUser,['teacher','admin']);
 }
 });
 
 Votes.allow({
-    
+
 insert: function(){
-    
-return (Meteor.user().profile.group=='teacher');   
-    
+
+return Roles.userIsInRole(currentUser,['teacher','admin']);
+
 },
 update: function(){
-    
-return true;   
-    
+
+return Roles.userIsInRole(currentUser,['teacher','admin']);
+
 }
-    
+
 })
 
 Currency.allow({
-    
+
 insert: function(){
-    
- return (Meteor.user().profile.group=='teacher');   
-    
+
+ return Roles.userIsInRole(currentUser,['teacher','admin']);
+
 },
-    
+
 remove: function(){
-    
-return (Meteor.user().profile.group=='teacher');    
-    
+
+return Roles.userIsInRole(currentUser,['teacher','admin']);
+
 },
-    
+
 update: function(){
-    
-return (Meteor.user().profile.group=='teacher'); 
-    
+
+return Roles.userIsInRole(currentUser,['teacher','admin']);
+
 }
-    
+
 });
 
-Meteor.users.deny({
-   update: function(){return true;},
-   
-    
-});
 
-Accounts.onCreateUser(function(options, user) {
-  
-  // We still want the default hook's 'profile' behavior.
-  if (options.profile)
-    user.profile = {group:'student'};
+Accounts.onCreateUser(function(options, user){
+  var role = ['student'];
+  user.roles = role
   return user;
+});
+
+Meteor.publish("users", function () {
+  var user = Meteor.users.findOne({_id:this.userId});
+
+  if (Roles.userIsInRole(user, ["admin","teacher"])) {
+
+    return Meteor.users.find({}, {fields: {emails: 1, profile: 1, roles: 1,username:1}});
+  }
+
+  this.stop();
+  return;
+});
+
+Meteor.startup(function () {
+        // bootstrap the admin user if they exist -- You'll be replacing the id later
+        if (Meteor.users.findOne("yHKt4YzTuxeEdx53h")){
+            Roles.addUsersToRoles("yHKt4YzTuxeEdx53h", ['admin']);
+            }
+        if(!Meteor.roles.findOne({name: "teacher"}))
+                        Roles.createRole("teacher");
+
+        if(!Meteor.roles.findOne({name: "student"}))
+                        Roles.createRole("student");
+
+
+
+
 });

@@ -1,5 +1,5 @@
 <template name = "chatWindow">
-<div class = "span6 chatWindow outline">
+<div class = "col-md-6 chatWindow outline">
 
   <textarea  rows = "2" placeholder = "Enter message here." id = "chatEntry"></textarea>
   <button class="btn" id = 'sendChatMessage'>Send Message</button>
@@ -15,8 +15,7 @@
 
 
 <template name = "chatLine">
-   
-<tr><td class = "chatUser">{{user}}:<br><span style = "font-size:0.5em;">{{cleanDate submittedAt}}</span> </td><td class = "chatMessage">{{message}}</td></tr>
-   
-</template>
 
+<tr><td class = "chatUser">{{user}}:<br><span style = "font-size:0.5em;">{{cleanDate submittedAt}}</span> </td><td class = "chatMessage">{{message}}</td></tr>
+
+</template>

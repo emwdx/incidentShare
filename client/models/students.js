@@ -5,51 +5,51 @@ Template.selectGrade.events({
   	'change #grade' : function(){
   	Session.set('selectedGrade',$('#grade').val());
     Session.set("currentlySelectedStudent","");
-  	
+
   	}
-    
+
   });
 
 Template.studentList.rendered = function(){
-  
+
   $('.entry').hide();
-  
+
   }
-  
+
   Template.studentList.helpers({
   students: function(){
-  
+
   selectedGrade = Session.get('selectedGrade')
-  
+
     retrievedStudents = Students.find({grade:parseInt(selectedGrade)},{sort: {name: 1}}).fetch();
-  
+
   return retrievedStudents;
-  
-    
+
+
   },
   houseClass: function(student){
-  
+
   if(this.house=='G'){
   return "text-success";
   }
-  
+
   else if(this.house=='Y'){
-  
+
   return "text-warning";
-  
+
   }
-  
+
   else if(this.house=='B'){
-  
+
   return "text-info";
-  
+
   }
-  
+
   else{
   return "text-error";
   }
   }
-    
+
   });
 
  Template.studentList.events({
@@ -58,19 +58,19 @@ Template.studentList.rendered = function(){
   $(".student").removeClass('selected');
   $(event.currentTarget).addClass('selected');
   Session.set("currentlySelectedStudent",currentStudent);
-  
+
   }
-   
+
   });
 
 
 Template.addStudents.events({
-    
+
 
 'click #addStudentButton':function(e){
 e.preventDefault();
 e.stopPropagation();
-var formObject = $(e.currentTarget).parent().parent()  
+var formObject = $(e.currentTarget).parent().parent()
 var name = formObject.find('[name=studentName]').val()
 var grade = parseInt(formObject.find('[name=grade]').val())
 var studentID = parseInt(formObject.find('[name=studentID]').val())
@@ -101,29 +101,29 @@ var newStudent = {grade:grade,
 Students.insert(newStudent);
 $('#addStudent').modal('hide');
 }
-    
-    
-    
+
+
+
 });
 
 Template.editStudents.events({
-    
-    
+
+
 'click .deleteStudent': function(e){
- 
+
     e.stopPropagation();
     e.preventDefault();
     var studentName = Session.get('currentlySelectedStudent');
     selectedStudent = Students.findOne({name:studentName});
     Students.remove({_id:selectedStudent._id});
-    $('#editStudent').modal('hide');    
-  
+    $('#editStudent').modal('hide');
+
 },
 'click #updateStudentButton': function(e){
 
 e.preventDefault();
 e.stopPropagation();
-var formObject = $(e.currentTarget).parent().parent()  
+var formObject = $(e.currentTarget).parent().parent()
 var name = formObject.find('[name=studentName]').val()
 var grade = parseInt(formObject.find('[name=grade]').val())
 var studentID = parseInt(formObject.find('[name=studentID]').val())
@@ -153,45 +153,45 @@ var currentStudent = Students.findOne({name:Session.get('currentlySelectedStuden
 
 Students.update({_id:currentStudent._id},{$set:updateStudent});
 $('#editStudent').modal('hide');
-    
-    
+
+
 }
 });
 
 Template.editStudents.helpers({
-    
+
    currentlySelectedStudent: function(){
-       
-       
-    return Session.get('currentlySelectedStudent');   
-       
+
+
+    return Session.get('currentlySelectedStudent');
+
    },
 
     student: function(){
-     
-     return Students.find({name:Session.get('currentlySelectedStudent')});   
-        
+
+     return Students.find({name:Session.get('currentlySelectedStudent')});
+
     }
-    
+
 });
 
 Template.incidentBadge.helpers({
-   numberOfIncidents: function(){    
-   
+   numberOfIncidents: function(){
+
        allIncidents = Incidents.find({name:this.name}).fetch();
        numOfIncidents = allIncidents.length;
-    if(numOfIncidents!=0){   
-    return numOfIncidents;//allIncidents.length; 
+    if(numOfIncidents!=0){
+    return numOfIncidents;//allIncidents.length;
     }
     else{
-    return null    
+    return null
     }
-   
+
    }
-    
+
 });
 Template.selectedStudentInformation.events({
-  
+
  'click .submitIncident': function(event){
   event.preventDefault();
   event.stopPropagation();
@@ -200,34 +200,34 @@ Template.selectedStudentInformation.events({
                 recordedTimeStamp: new Date,
 				date: new Date().toDateString(),
 				name: currentStudentName,
-				
+
 				comments: $(event.target).parent().find('[name=comment]').val(),
 				user: Meteor.user().username
 				}
 	Incidents.insert(newIncident);
-	
+
     Session.set("currentlySelectedStudent","");
      $(".student").removeClass('selected');
     },
-   
+
    'click #viewStudentPoints': function(event){
     event.preventDefault();
     event.stopPropagation();
     $('#studentPointsList').modal('show');
-    
-             
+
+
    },
    'click .addHousePoints': function(event){
-  
+
    event.preventDefault();
    event.stopPropagation();
    var currentStudentName = Session.get("currentlySelectedStudent");
-  
+
    var retrievedName = Students.find({name:currentStudentName}, {fields: {house: 1}}).fetch();
-   console.log(retrievedName);  
+   console.log(retrievedName);
    var currentHouse = retrievedName[0].house;
-		
-   
+
+
    var earnedPoints = {
         recordedTimeStamp: new Date,
    		date: new Date().toDateString(),
@@ -236,9 +236,9 @@ Template.selectedStudentInformation.events({
    		comments: $(event.currentTarget).parent().find('[name=pointsComments]').val(),
    		house: currentHouse,
    		reportedBy: Meteor.user().username,
-        schoolYear:'14-15'
+        schoolYear:'15-16'
   		 };
-   
+
    if(earnedPoints.points){
    HousePoints.insert(earnedPoints);
    var totalPoints = Session.get('currentUserHousePointsThisWeek');
@@ -247,17 +247,17 @@ Template.selectedStudentInformation.events({
     $(".student").removeClass('selected');
    }
    else{alert('Select a number of points.');}
-   
-   
+
+
    },
-     
+
  'click #editProfile': function(e){
   e.preventDefault();
   e.stopPropagation();
-  
+
   var currentStudentName = Session.get('currentlySelectedStudent');
   currentStudent = Students.findOne({name:currentStudentName});
-  
+
   $('#editStudent').find('[name=studentName]').val(currentStudent.name);
   $('#editStudent').find('[name=grade]').val(currentStudent.grade);
   $('#editStudent').find('[name=studentID]').val(currentStudent.studentID);
@@ -270,122 +270,123 @@ Template.selectedStudentInformation.events({
   $('#editStudent').find('[name=motherphone]').val(currentStudent.motherphone);
   $('#editStudent').find('[name=nationality]').val(currentStudent.nationality);
   $('#editStudent').find('[name=gender]').val(currentStudent.gender);
-  
+
  $('#editStudent').modal('show');
-     
-     
+
+
  },
  'submit #formSelectedStudent': function(e){
   e.preventDefault();
-     
-     
+
+
  }
 
 
-    
-    
+
+
 });
 Template.selectedStudentInformation.helpers({
-    
+
    studentIsSelected: function(){
     var selectedStudent = Session.get("currentlySelectedStudent");
     if(selectedStudent==""){return false}
     else{ return true}
-    
-       
+
+
    },
    houseClass: function(){
-       
+
     var selectedStudent = Session.get("currentlySelectedStudent");
     var currentStudent = Students.findOne({name:selectedStudent});
   if(currentStudent.house=='G'){
-  return "text-success";
+  return "green-house";
   }
-  
+
   else if(currentStudent.house=='Y'){
-  
-  return "text-warning";
-  
+
+  return "yellow-house";
+
   }
-  
+
   else if(currentStudent.house=='B'){
-  
-  return "text-info";
-  
+
+  return "blue-house";
+
+
   }
-  
+
   else if(currentStudent.house=='R'){
-  return "text-error";
+  return "red-house";
   }
   else{
-      
+
    return '';
-      
+
   }
-       
-   }    
-    
-    
+
+   }
+
+
 });
 
 
  Template.studentAutoComplete.rendered = function(){
-     
-     var studentList = _(Students.find({},{fields:{name:true}}).fetch()).pluck('name'); 
-     
+
+     var studentList = _(Students.find({},{fields:{name:true}}).fetch()).pluck('name');
+
    $("#studentSearchComplete").autocomplete({
     minLength:2,
     source: studentList,
     select: function( e, ui ) {
-  
+
   currentStudent = ui.item.value;
   Session.set("currentlySelectedStudent",currentStudent);
   }
-   
-}); 
+
+});
 };
 
 Template.studentAutoComplete.events({
-   
+
 'keydown #studentSearch': function(e){
- 
+
 if (e.keyCode == '13') {
      e.stopPropagation()
 
-   }    
-    
+   }
+
 }
-    
+
 });
 
 Tracker.autorun(function(){
-    
+
 if(Session.get('data_loaded')){
-   
-   var studentList = _(Students.find({},{fields:{name:true}}).fetch()).pluck('name'); 
-    
+
+   var studentList = _(Students.find({},{fields:{name:true}}).fetch()).pluck('name');
+
    Session.set('studentSearchNames',studentList);
-    //console.log(Session.get('studentSearchNames'));    
-  
+    //console.log(Session.get('studentSearchNames'));
+
    $("#studentSearchComplete").autocomplete({
     minLength:2,
     source: Session.get('studentSearchNames'),
     select: function( e, ui ) {
-  
+
   currentStudent = ui.item.value;
   Session.set("currentlySelectedStudent",currentStudent);
   Session.set('selectStudent','True');
   Session.set('browseLog','False');
   Session.set('housePoints','False');
-  Session.set('showActivities','False');
-  
-  }   
-   
+
+
+  }
+
 });
 }
-    
 
-      
-        
-    
+
+
+
+
 });
